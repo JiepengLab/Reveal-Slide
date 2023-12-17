@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Title</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/night.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/tomorrow-night-bright.css" />
+
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+
+# 感知机 | Perceptron
+
+</script></section><section  data-markdown><script type="text/template">
+
+<font size="6" align="left">
+
+现在让我们考虑一下<font color="orange">阈值激活函数(threshold activation function)</font>的情况。
+
+相应的神经模型被称为<font color="cyan">感知机(perceptron)</font>。
+
+通过模拟<font color="orange">随机梯度下降(SGD)</font>，我们推导出了<font color="cyan">Rosenblatt 学习(Rosenblatt learning)</font>，它在有限的时间内识别出一个线性分类器。
+
+值得注意的是，如果数据样本不是线性可分的，Rosenblatt学习就会失败。这种困难可以通过<font color="cyan">具有隐藏层(hidden layers)</font>的感知机来克服。
+
+</font>
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## Rosenblatt 学习
+
+</script></section><section data-markdown><script type="text/template">
+
+- 我们假设数据样本 $(x_i, y_i)\in \mathbb{R}^m \times \{0, 1\}, i=1, \ldots, n$ 是严格线性可分的。这意味着存在一个权值向量 $w\in \mathbb{R}^m$，使得它对所有的 $i=1, \ldots, n$ 都满足下面的条件：
+
+$$
+w^T\cdot x_i > 0, \text{ if and only if } y_i = 1, w^T\cdot x_i < 0, \text{ if and only if } y_i = 0.
+$$
+
+<p class="fragment">
+也就是说，我们有一个<font color="orange">超平面</font></p>
+<p class="fragment">
+$$
+H=\{x\in \mathbb{R}^m: w^T\cdot x = 0\}
+$$
+</p>
+<p class="fragment">
+区分了 $C_{yes}$ 和 $C_{no}$
+</p>
+
+</script></section><section data-markdown><script type="text/template">
+
+![Alt text](images/image.png)
+
+<p class="fragment">
+这里的 $w$ 就是一个<font color="orange">线性分类器（linear classifier）</font>。
+</p>
+
+<p class="fragment">
+我们该如何合理地找到这样的 $w$ 呢？
+</p>
+
+</script></section><section data-markdown><script type="text/template">
+
+## SGD Update
+
+</script></section><section data-markdown><script type="text/template">
+
+<font align="left">
+
+- 我们可以使用<font color="orange">随机梯度下降(SGD)</font>来找到这样的 $w$。
+
+$$w(t+1)=w(t)-\eta\cdot (f_S(x_i^T\cdot w(t))-y_i)\cdot x_i$$
+
+<p class="fragment">
+· 将（SGD）中的 <font color="orange">Sigmoid 激活函数</font> $f_S$ 替换为<font color="orange">阈值激活函数</font> $f_T$。
+</p>
+<p class="fragment">
+· 将步长 $\eta$ 设为 1。
+</p>
+<p class="fragment">
+· 便得到了<font color="cyan">Rosenblatt 学习</font>，也被称为<font color="cyan">感知器算法(perceptron algorithm)</font>。
+</p>
+</font>
+
+<p class="fragment">
+$$w(t+1)=w(t)-(f_T(x_i^T\cdot w(t))-y_i)\cdot x_i$$
+</p>
+
+</script></section><section data-markdown><script type="text/template">
+
+<font align="left">
+
+<p class="fragment">
+① 感知器算法是由 Rosenblatt 于1957年在康奈尔航空实验室发明的。
+</p>
+
+<p class="fragment">
+② 感知器的初衷是作为一种<font color="cyan">机器</font>而非<font color="orange">程序</font>。虽然它的首次实现是在软件中，但后来又被实现为硬件——“Mark 1 perception”。
+</p>
+
+<p class="fragment">
+③ 1958年，纽约时报报道感知器被预期为 <font color="orange">“一台电子计算机的胚胎</font>，[The Navy]预期它将能够<font color="cyan">行走、讲话、看见、写作、复制自身</font>并且<font color="cyan">意识到自己的存在</font>”。
+</p>
+
+</font>
+
+</script></section><section data-markdown><script type="text/template">
+
+我们再请回之前的 Rosenblatt 学习的更新规则：
+
+<p class="fragment">
+$$w(t+1)=w(t)-(f_T(x_i^T\cdot w(t))-y_i)\cdot x_i$$
+</p>
+
+<p class="fragment">
+为了理解感知器的重要性，让我们重写一下上式：
+</p>
+<p class="fragment">
+对于分类<font color="cyan">正确</font>的样本，有 $f_T(x_i^T\cdot w(t))=y_i$，权值向量 $w$ 不会改变：
+</p>
+<p class="fragment">
+$$w(t+1)=w(t)$$
+</p>
+<p class="fragment">
+对于分类<font color="orange">不正确</font>的样本，有 $f_T(x_i^T\cdot w(t))\neq y_i$，权值向量 $w$ 会改变：
+</p>
+<p class="fragment">
+$$w(t+1)=\begin{cases}w(t)+x_i, & \text{if } f_T(x_i^T\cdot w(t))=0 \text{ and } y_i=1\\w(t)-x_i, & \text{if } f_T(x_i^T\cdot w(t))=1 \text{ and } y_i=0\end{cases}$$
+
+</script></section><section data-markdown><script type="text/template">
+
+第二种情况可以轻易地用神经学习的术语进行解读。
+
+- 一次<font color="orange">错误分类</font>会引起<font color="cyan">权重变化</font> $w(t+1)−w(t)$， 等于<font color="cyan">带符号输入</font> $±x_i$。
+- 这里的符号取决于我们是错误地将输入分配给了类别 $C_{yes}$ 还是 $C_{no}$。
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## Rosenblatt 学习的收敛性
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## XOR 问题
+
+</script></section><section data-markdown><script type="text/template">
+
+<font align="left">
+
+<p class="fragment">
+虽然<font color="cyan">Rosenblatt学习</font>最初看起来充满希望，但很快就被证明感知器无法对<font color="orange">非线性可分</font>的数据进行分类。
+</p>
+<p class="fragment">
+为了说明这点，我们引用了经典的<font color="orange">XOR反例</font>。XOR问题模拟的是一种只有在输入不同时才会输出真值的逻辑运算。让我们通过真值表来描述XOR，这个表格列出了逻辑表达式在各个函数参数上的函数值：
+</p>
+</font>
+
+<p class="fragment">
+$$\begin{array}{c|c|c}\text{input } x &(1,1)&(1,0)&(0,1)&(0,0)\\\hline\text{output } y &0&1&1&0\end{array}$$
+</p>
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## 多层感知机
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":1520,"height":950,"margin":0.04,"transition":"convex","slideNumber":true}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

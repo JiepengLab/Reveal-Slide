@@ -1,25 +1,820 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Title</title>
-    <link rel="shortcut icon" href="./favicon.ico" />
-    <link rel="stylesheet" href="./dist/reset.css" />
-    <link rel="stylesheet" href="./dist/reveal.css" />
-    <link rel="stylesheet" href="./dist/theme/night.css" id="theme" />
-    <link rel="stylesheet" href="./css/highlight/tomorrow-night-bright.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Neural Network</title>
+  <link rel="shortcut icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="./dist/reset.css" />
+  <link rel="stylesheet" href="./dist/reveal.css" />
+  <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
+  <link rel="stylesheet" href="./css/highlight/github.css" />
+  <link rel="stylesheet" href="./assets/custom.css" />
 
 
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template">
+</head>
 
-# 感知机 | Perceptron
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown>
+        <script type="text/template">
 
-</script></section><section  data-markdown><script type="text/template">
+## Chapter 8 神经元的数学模型
+
+<div class="fragment">
+<div class="three-line">
+<center>目录</center>
+
+|章节 ||标题 |
+|:--:|:--:|:--:|
+|8.1|...|神经网络与数学模型|
+|8.2.1|...|逻辑回归（Logistic Regression）|
+|8.2.2|...|感知机（Perceptron）|
+
+</div>
+</div>
+</script>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+
+## 8.1 神经网络与数学模型
+
+<div class="fragment">
+
+在生物学中，**神经网络**是由一组化学连接或功能相关的神经元组成的电路。
+
+</div>
+
+<div class="fragment">
+
+在人体内，神经网络扮演着关键的信息处理和传递角色。它们不仅协调和调节各种生理功能，如肌肉运动、感觉知觉、内分泌系统的控制，还参与更复杂的过程，包括思考、决策、学习和记忆。
+</div>
+<div class="fragment">
+
+通过这些神经元网络，大脑能够接收、处理和响应来自身体各部分以及外部环境的信号，确保身体的正常运作和对环境的适应。
+
+</div>
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+## 8.1 神经网络与数学模型
+
+
+<div class="fragment">
+
+我们可以通过**权重**来模拟神经网络的连接。
+
+</div>
+<div class="fragment">
+
+**正权重**代表**兴奋性**连接，而**负值**代表**抑制性**连接。
+</div>
+<div class="fragment">
+
+所有输入都通过权重进行修改并求和，**神经元的聚合**则对应于取**线性组合**。
+</div>
+<div class="fragment">
+
+最终，由**激活函数**控制输出的幅度。
+</div>
+<div class="fragment">
+
+尽管每个神经元相对简单，但它们可以构建出处理能力惊人的网络。这促进了神经网络自 20 世纪 70 年代起在人工智能问题解决中的发展。特别是在过去十年里，以神经网络为基础的应用取得了显著进展。
+</div>
+<div class="fragment">
+
+本章将介绍如何用数学模型来模拟神经元的功能，这是以分类神经元为例，用**广义线性回归**来完成的。这里的“广义化”指的是激活函数的使用。
+
+</div>
+
+</script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+
+## 8.1.1 神经元与其数学描述
+<div class="fragment">
+
+神经元的本质是一个函数，接受输入，得到输出
+</div>
+<div class="fragment">
+
+多层神经网络就是多层复合函数，下面我们介绍最简单的线性层和激活层
+</div>
+<div class="fragment">
+
+  ![image-20231202164825786](markdown-img/note.assets/image-1.png)
+</div>
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+
+## 8.1.1 神经元与其数学描述
+
+<div class="fragment">
+
+- 输入向量 (inputs vector)：$x = (1,x_1,x_2,...,x_{m-1})^T$
+- 权重向量 (weights vector)：$w = (w_0,w_1,w_2,...,w_{m-1})^T$
+- 激活函数 (activation function)：$f$
+</div>
+<div class="fragment">
+
+<p>
+  <font size="5">
+我们用上面三个量的组合来描述一个神经元的激活过程
+$$
+y = f(x^T\cdot w) =w_0+\sum_{i=1}^{m-1}w_ix_i 
+$$
+这里 $w_0$ 也被称作偏移项(bias)，上式中 $x^T\cdot w$ 的实质就是对这两个向量做点乘
+
+</font></p> 
+</div>
+<div class="fragment">
+  
+<p>
+  <font size="5">
+
+$$
+x \xrightarrow{w} x^T\cdot w \xrightarrow{f}y
+$$
+
+这里我们把第一层叫做`线性层`，第二层叫做`激活层`
+</font></p> 
+
+</div>
+</script>
+        </section>
+
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+
+
+## 8.1.2 功能例子：二分类
+
+<div class="fragment">
+
+现在，我们希望我们的神经元能够对输入进行二分类。
+</div>
+
+<div class="fragment">
+
+  也就是说
+  </div>
+  <div class="fragment">
+
+  <div class="three-line">
+    
+    |参数 |形式 |
+    |:--:|:--:|
+    |Input|$x = (1,x_1,x_2,...,x_{m-1})^T$|
+    |Output|$$\text{if}\quad i \in C_{yes}, \quad y_i = 1$$ $$\text{if}\quad i \in C_{no}, \quad y_i = 0$$|
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    | | |
+    || ________________________________________|
+
+    </div>
+  </div>
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+## 8.1.2 功能例子：二分类
+
+<div class="fragment">
+
+为了实现分类的效果，我们需要基于我们的数据集 
+
+$$(x_i,y_i)\in \mathbb{R}^m\times \text{{0,1\}}$$ 
+
+来训练出我们需要的权重向量 $w$，使得对于每一个 $x_i\quad$，我们都能够得到正确的输出 $y_i\quad$。
+
+</div>
+
+<div class="fragment">
+
+显然，不同的激活函数训练出来的权重向量 $w$ 也是不同的。
+
+</div>
+
+<div class="fragment">
+
+  我们来考察一些激活函数
+  
+  </div>
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+## 8.1.3 阀值激活函数
+
+<div class="fragment">
+
+激活函数其实就是将 $x^T\cdot w\quad$（接下来记作 $z\quad$） 映射到一个新的值。
+  
+</div>
+
+<div class="fragment">
+
+最简单的一种就是阀值激活函数（threshold activation function），即
+  
+</div>
+
+<div class="fragment">
+$$
+\begin{equation}
+f_T(z)=\left\{
+\begin{aligned}
+1 \quad z\geq 0\\
+0 \quad z<0\\
+\end{aligned}
+\right
+.
+\end{equation}$$
+</div>
+
+<div class="fragment">
+
+由于其不可导，我们可以引入其他函数函数来近似阀值激活函数
+</div>
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+## 8.1.4 Sigmoid 函数
+
+<div class="fragment">
+
+  Sigmoid 函数是一种常用的激活函数，其定义如下
+</div>
+
+<div class="fragment">
+
+$$
+f_S(z)=\frac{1}{1+e^{-z}}
+$$
+</div>
+<div class="fragment">
+
+该如何实现二分类呢？
+</div>
+
+<div class="fragment">
+
+  通过简单的推导，我们可以知道
+</div>
+<div class="fragment">
+
+- Sigmoid 函数的值域为 $(0,1)$
+
+</div>
+<div class="fragment">
+
+- Sigmoid 函数关于点 $(0,\frac{1}{2})$ 对称
+
+</div>
+<div class="fragment">
+$$
+\begin{equation}
+y=\left\{
+\begin{aligned}
+1 \quad f_S(x^T\cdot w)\geq \frac{1}{2}\\
+0 \quad \text{else}
+\end{aligned}
+\right
+.
+\end{equation}$$
+</div>
+
+</script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+## 8.1.5 两种不同激活函数
+
+![Alt text](markdown-img/note.assets/image-2.png)
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+              ## 8.1.5 两种不同激活函数
+
+<div class="fragment">
+
+采用不同的激活函数，我们对其有不同的叫法
+</div>
+<div class="fragment">
+
+<div class="three-line">
+<center></center>
+
+|激活函数 ||回归类型 |
+|:--:|:--:|:--:|
+| $f_S(x^T\cdot w)$ |...|逻辑回归（LR-Logistic Regression）|
+| $f_T(x^T\cdot w)$ |...|感知机（Perceptron）|
+</div>
+<div class="fragment">
+
+接下来，我们将逐一介绍这两种激活函数对应的回归类型，及它们是如何计算确定权重向量 $w$ 的。
+
+</div>
+</script>
+        </section>
+      </section>
+
+      <section>
+
+        <section data-markdown>
+          <script type="text/template">
+## 8.2.1.1 Sigmoid函数的性质
+
+<div class="fragment">
+
+`Sigmoid` 函数 $\sigma(x)$ 定义如下
+</div>
+<div class="fragment">
+
+$$
+\sigma(x) = \frac{1}{1+e^{-x}}
+$$
+
+</div>
+<div class="fragment">
+
+其图像如下
+</div>
+<div class="fragment">
+
+![image-20231202170845027](markdown-img/note.assets/image-20231202170845027.png)
+<center>
+    sigmoid 函数图像
+</center>
+</div>
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+## 8.2.1.1 Sigmoid函数的性质
+
+<div class="fragment">
+
+我们可以进一步的计算其反函数来考察这个激活函数的性质
+
+</div>
+<div class="fragment">
+
+$$
+p =\sigma(z)= \frac{1}{1+e^{-z}} \Rightarrow z = \ln \frac{p}{1-p}
+$$
+
+</div>
+<div class="fragment">
+
+上式右边的等式可以这样解释：若为 $p$ 为某事件发生的概率，$1-p$ 为其不发生的概率，那么我们用 $z$ 来衡量二者比值的大小，从而相对的衡量这个事件发生概率的大小
+
+</div>
+<div class="fragment">
+
+该反函数通常也叫做 logit 函数，即 $z = \ln {\frac{p}{1-p}} = \text{logit(p)}$
+
+</div>
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+## 8.2.1.1 Sigmoid函数的性质
+
+<div class="fragment">
+
+若将 `Sigmoid` 函数作为激活函数代入我们的神经网络中，即得到
+
+</div>
+<div class="fragment">
+
+$$
+y = \sigma(x^T \cdot w) \Rightarrow x^T \cdot w = \text{logit}(y)
+$$
+
+</div>
+<div class="fragment">
+
+即可以看作我们通过权值 $w$ 将 $x$ 线性的变换成激活的强度 $\text{logit}(y)$
+</div>
+
+<div class="fragment">
+
+实际上，也就是说 $p(y=1|x)$ 的对数几率是关于 $x$ 的线性函数，这其实就是 Logistic 回归模型的实质。
+</div>
+
+
+<div class="fragment">
+
+我们其实就是使用线性回归模型去逼近二分类任务标签值为 $1$ 的对数几率。
+</div>
+
+</script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+## 8.2.1.2 极大似然估计
+
+<div class="fragment">
+
+现在我们知道了二分类问题可以用 Logistic 模型求解，那么现在的问题就是已知数据集 $D\quad$，我们要如何训练出合适的 $w\quad$。
+</div>
+
+
+<div class="fragment">
+
+这就需要引入极大似然估计。
+</div>
+
+
+<div class="fragment">
+
+本质上，我们通过引入似然函数将原先的求 $w$ 的问题转化为以对数似然函数为目标函数的最优化问题。
+
+</div>
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+<div class="fragment">
+
+首先我们可以假设标签是符合伯努利分布 $\mathcal{B}(p)\quad$，其中 $p$ 就是我们激活函数所给出的值。
+</div>
+
+
+<div class="fragment">
+
+那么对于某一个标签在权重取成 $w$ 的概率分布函数就为
+
+</div>
+
+
+<div class="fragment">
+
+$$
+p(y_i| w) = p ^ {y_i} (1 - p) ^ {1 - y_i} $$
+$$
+= (f_S(x_i^T \cdot w))^{y_i} \cdot (1 - f_S(x_i ^ T \cdot w))^{1 - y_i}
+$$
+</div>
+
+
+<div class="fragment">
+  
+我们在假设数据集之间的数据是独立的，即每组 $\{x_i, y_i\}$ 相互独立，那么
+</div>
+
+
+<div class="fragment">
+
+$$
+p(\boldsymbol{y} | w) = \prod_{i = 1} ^ n p(y_i | w)
+$$
+
+</div>
+
+
+<div class="fragment">
+
+我们假设存在这样一个最佳的权重，那么现在就是使这个后验概率 $p(w | \boldsymbol{y})$ 最大
+</div>
+
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <div class="fragment">
+
+利用贝叶斯公式我们可以知道
+</div>
+
+<div class="fragment">
+
+$$
+p (w | \boldsymbol{y}) = \frac{p(\boldsymbol{y} | w) \cdot p(w)}{p(\boldsymbol{y})}
+$$
+</div>
+
+</div>
+
+<p class="fragment">
+<font size="5">
+由于 $w$ 的取值是整个空间，可以假设 $p(w)$ 是均匀分布的，而 $p(\boldsymbol{y})$ 就是 $\boldsymbol{y}$ 的概率分布函数，故想要最大化后验概率就是最大化 $p(\boldsymbol{y} | w)$
+</font>
+
+</p>
+
+<div class="fragment">
+
+因此我们就将 $p(\boldsymbol{y} | w)$ 称作似然函数（记作 $L$ ）
+</div>
+
+<div class="fragment">
+
+  $$
+L(w) = p(\boldsymbol{y} | w)
+$$
+
+</div>
+
+<div class="fragment">
+
+  为了便于求解，我们将似然函数两边求解，得到
+
+</div>
+
+<div class="fragment">
+
+  $$
+\ln L(w) = \sum_{i = 1} ^ n (y_i \cdot \ln f_S(x_i^T \cdot w) + (1 - y_i) \cdot \ln(1 - f_S(x_i^T \cdot w)))
+$$
+</div>
+
+<div class="fragment">
+
+我们现在的目标就是最大化这个函数。
+
+</div>
+
+
+</script>
+        </section>
+      </section>
+      <section>
+
+
+        <section data-markdown>
+          <script type="text/template">
+## 8.2.1.3 平均交叉熵 (Average Cross-Entropy) 
+
+</div>
+
+<div class="fragment">
+
+在机器学习中，我们往往用损失函数来描述模型预测错误的程度，在 Logistic 回归中，我们也是类似的，将似然函数和一个损失函数相对应，这样可以将最大化似然函数转化为最小化损失函数，可以利用梯度下降求解。
+</div>
+
+<div class="fragment">
+
+  非常简单，我们只需要将函数取反，同时，为了消除数据数量对损失的印象，我们对所有的和取平均数，即
+$$
+\min_w H(w) = \frac{1}{n} \cdot \sum_{i = 1} ^ n H_i(w)
+$$
+其中
+$$
+H_i(w) = - y_i \cdot \ln f_S(x_i^T \cdot w) -  (1 - y_i) \cdot \ln(1 - f_S(x_i^T \cdot w))
+$$
+这其实就是信息论中的交叉熵函数。
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+我们求出交叉熵函数的梯度
+$$
+\nabla H_i(w) = (f_S(x_i \cdot w) - y_i) \cdot x_i \\
+\nabla ^ 2 H_i(w) = f_S(x_i \cdot w) \cdot (1 - f_S(x_i)) \cdot x_i \cdot x_i^T
+$$
+由于 $x_i \cdot x_i^T$ 是半正定的，且对于每一个 $\nabla^2H_i$ 都成立，因此 $H$ 是凸函数，于是采用梯度下降求解
+
+</script>
+        </section>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
+## 随机梯度下降法 (Stochastic Gradient Descent)
+</script>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+## 梯度下降法
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+我们采用梯度下降法来寻找使 $H(w)$ 最小的 $w$，其基本思想是对某一个更新步 $t$，其对应的 $w = w(t)$，为了计算目标函数 $H(w)$ 的极小值，我们需要得到其在这一时刻的梯度 $\nabla H(w(t))$，随后用下面的方程来更新我们的 $w(t)$
+$$
+w(t+1) = w(t) - \eta \nabla H(w(t))
+$$
+
+其中 $\eta$ 是一个待定的参数，称为 **步长或学习率**
+
+因为 $H(w)$ 是各个交叉熵函数的平均值，故由梯度的线性性，我们知道
+$$
+\nabla H(w) = \frac 1n \sum_{i=1}^n \nabla H_i(w)
+$$
+
+将其代入更新方程迭代计算即可
+
+</script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+## 随机梯度下降法
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+在计算上面的梯度下降法时，我们需要计算出所有交叉熵函数的梯度再取平均，在计算上非常麻烦，故我们引入了 **随机梯度下降法 (SGD)**
+
+随机梯度下降法的要点是每次更新时 **随机的** 从 $i=1,2,...,n$ 中选择 **一个** 交叉熵函数的梯度 $\nabla H_i(w)$，用它来替代整个平均交叉熵函数，即将更新方程改为
+$$
+w(t+1) = w(t) - \eta \nabla H_i(w(t))
+$$
+代入上面我们求得的梯度公式即为
+$$
+w(t+1) = w(t)-\eta [\sigma(x_i^T\cdot w) - y_i] \cdot x_i
+$$
+下面我们来证明这一方法的收敛性（可行性）
+
+
+</script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+## 收敛性证明
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+假设最终的解为 $w$，即满足
+$$
+w = \text{argmin} \ H(w)
+$$
+我们考察 $t+1$ 轮更新得到的 $w(t+1)$ 与 $w$ 之间的二维欧式距离 $\|\cdot\|_2$，下面简写为 $|\cdot |$
+
+代入上面的更新方程得到
+$$
+|w(t+1)-w|^2 = |w(t)- \eta \nabla H_i(w(t)) -w| ^2\\
+=(w^T(t)- \eta \nabla^T H_i(w(t)) -w^T)\cdot(w(t)- \eta \nabla H_i(w(t)) -w)\\
+=|w(t)-w|^2 - 2\eta \nabla^TH_i(w(t))(w(t)-w)+ \eta^2 |\nabla^TH_i(w(t))|^2 \quad (3)
+$$
+对最后一项我们有
+$$
+|\nabla^TH_i(w(t))| = |[\sigma(x_i^T\cdot w(t)) - y_i] \cdot x_i|\\
+=|\sigma(x_i^T\cdot w(t)) - y_i| \cdot |x_i|
+$$
+因为$0\leq \sigma(x_i^T\cdot w),y_i\leq 1$，故$|\sigma(x_i^T\cdot w) - y_i| \leq 1$，即
+$$
+|\nabla^TH_i(w(t))|=|\sigma(x_i^T\cdot w(t)) - y_i| \cdot |x_i| \leq |x_i|
+$$
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+令 $G$ 为所有 $|x_i|$ 中的最大值，则有
+$$
+G = \max_{i=1,2,...,n}|x_i|\\
+|\nabla^TH_i(w(t))| \leq G
+$$
+故我们找到了 $(3)$ 式最后一项的一个上界，即化为
+$$
+|w(t+1)-w|^2 \leq|w(t)-w|^2 - 2\eta \nabla^TH_i(w(t))(w(t)-w)+ \eta^2 G^2 \quad (4)
+$$
+
+由于 $(4)$ 式中的 $\nabla^TH_i(w(t))$ 是每次在 $i = 1,2,...,n$ 中随机选取的，我们不妨考虑 $(4)$ 式的期望
+$$
+E(|w(t+1)-w|^2)\leq E(|w(t)-w|^2) - 2\eta E(\nabla^TH_i(w(t))) \cdot (w(t)-w) + \eta^2G^2\\
+=E(|w(t)-w|^2) + 2\eta E(\nabla^TH_i(w(t))) \cdot (w-w(t)) + \eta^2G^2 \quad(5)
+$$
+我们先来考虑中间项 $E(\nabla^TH_i(w(t)))$，如果我们在 $\{1,2,...,n\}$ 中均匀的选取 $i$，即每个数被选到的概率都是 $\frac 1n$，则每个梯度 $\nabla ^TH_i(w)$ 被选到的概率也是 $\frac1n$，那么此时的期望即为
+$$
+E(\nabla^TH_i(w(t))) = \frac 1n \sum_{i=1}^n \nabla^TH_i(w(t)) = \nabla^T(\frac 1n\sum_{i=1}^nH_i(w(t)) ) = \nabla^T H(w(t))
+$$
+故 **随机选取梯度的期望正好就是平均交叉熵函数的梯度**
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+上面我们证明过交叉熵函数是凸函数，故由凸函数的性质我们有
+$$
+H(w) \geq H(w(t))  + \nabla^TH(w(t)) \cdot (w-w(t))
+$$
+*这里可以理解为 $f(a) \geq f(b) + f'(b)(b-a)$*
+
+那么整个中间项 $E(\nabla^TH_i(w)) \cdot (w-w(t))$ 即满足
+$$
+E(\nabla^TH_i(w)) \cdot (w-w(t)) \leq \nabla^TH(w)\cdot (w-w(t)) \leq H(w) - H(w(t))
+$$
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+综上我们有
+$$
+E(|w(t+1)-w|^2)\leq E(|w(t)-w|^2) + 2\eta (H(w) - H(w(t))) + \eta^2G^2
+$$
+移项整理得到
+$$
+H(w(t)) - H(w) \leq  \frac 1\eta \cdot \frac {E(|w(t)-w|^2) - E(|w(t+1)-w|^2)}2 + \eta \cdot \frac {G^2}2
+$$  
+
+不难发现上面这个不等式的右边是一个递推差分的形式，故我们将上式对 $t=1,2,...,T$ 求和得到
+$$
+\sum_{i=1}^T[H(w(t)) - H(w)] \leq \frac 1\eta \cdot \frac {E(|w(1)-w|^2) - E(|w(T+1)-w|^2)}2 + \eta \cdot \frac {TG^2}2\\
+\leq \frac 1\eta \cdot \frac {E(|w(1)-w|^2)}2 + \eta \cdot \frac {TG^2}2
+$$
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+因为我们的迭代起点 $w(1)$ 是一个确定值（相对于迭代过程而言），故 $E(|w(1)-w|^2) = |w(1)-w|^2$
+
+则上式化为
+$$
+\sum_{i=1}^TH(w(t)) - T\cdot H(w) \leq \frac 1\eta \cdot \frac {|w(1)-w|^2}2 + \eta \cdot \frac {TG^2}2\\
+\frac 1T\sum_{i=1}^TH(w(t)) - H(w) \leq \frac 1\eta \cdot \frac {|w(1)-w|^2}{2T} + \eta \cdot \frac {G^2}2
+$$
+因为 $H(w)$ 是一个凸函数，故我们有
+$$
+\frac 1T\sum_{i=1}^TH(w(t)) \geq H(\frac 1T\sum_{i=1}^Tw(t))
+$$
+*这里可以理解为* $\frac{f(a)+f(b)}2 \geq f(\frac{a+b}2)$
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+取 $\bar w(T) = \frac 1T\sum_{i=1}^Tw(t)$，则有
+$$
+H(\bar w(T)) - H(w) \leq \frac 1T\sum_{i=1}^TH(w(t)) - H(w) \leq \frac 1\eta \cdot \frac {|w(1)-w|^2}{2T} + \eta \cdot \frac {G^2}2
+$$
+由于步长 $\eta$ 可以自由选择，这里我们选择使不等式右端最小的$\eta$，即根据均值不等式，
+$$
+\eta = \text{argmin} \frac 1\eta \cdot \frac {|w(1)-w|^2}{2T} + \eta \cdot \frac {G^2}2 =  \frac{|w(1)-w|}G \cdot \sqrt{\frac 1T}
+$$
+此时有不等式
+$$
+H(\bar w(T)) - H(w) \leq |w(1)-w| \cdot G \cdot \sqrt{\frac 1T}
+$$
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+即我们通过随机梯度下降法得到的 $H(\bar w(T))$ 和极小值 $H(w)$ 的差存在上界，其中 $|w(1)-w|$ 和 $G$ 都不依赖于迭代过程，故有
+$$
+\lim _{T\to \infty} H(\bar w(T)) = H(w)\\
+且H(\bar w (T)) - H(w) = O(\sqrt{\frac 1T})
+$$
+由上面的结论我们知道，随机梯度下降法可以用来求平均交叉熵函数的极小值，并求出我们的参数 $w$
+
+</script>
+        </section>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
+
+## 感知机 | Perceptron
+
+</script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 <font size="6" align="left">
 
@@ -33,11 +828,18 @@
 
 </font>
 
-</script></section><section ><section data-markdown><script type="text/template">
+</script>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
 
 ## Rosenblatt 学习
 
-</script></section><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
 
 - 我们假设数据样本 $(x_i, y_i)\in \mathbb{R}^m \times \{0, 1\}, i=1, \ldots, n$ 是严格线性可分的。这意味着存在一个权值向量 $w\in \mathbb{R}^m$，使得它对所有的 $i=1, \ldots, n$ 都满足下面的条件：
 
@@ -56,9 +858,12 @@ $$
 区分了 $C_{yes}$ 和 $C_{no}$
 </p>
 
-</script></section><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
 
-![Alt text](images/image.png)
+![Alt text](./markdown-img/note.assets/image.png)
 
 <p class="fragment">
 这里的 $w$ 就是一个<font color="orange">线性分类器（linear classifier）</font>。
@@ -68,15 +873,21 @@ $$
 我们该如何合理地找到这样的 $w$ 呢？
 </p>
 
-</script></section><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
 
 ## SGD Update
 
-</script></section><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
 
 <font align="left">
 
-- 我们可以使用<font color="orange">随机梯度下降(SGD)</font>来找到这样的 $w$。
+- 我们可以使用<font color="orange">随机梯度下降 (SGD)</font>来找到这样的 $w$。
 
 $$w(t+1)=w(t)-\eta\cdot (f_S(x_i^T\cdot w(t))-y_i)\cdot x_i$$
 
@@ -95,7 +906,10 @@ $$w(t+1)=w(t)-\eta\cdot (f_S(x_i^T\cdot w(t))-y_i)\cdot x_i$$
 $$w(t+1)=w(t)-(f_T(x_i^T\cdot w(t))-y_i)\cdot x_i$$
 </p>
 
-</script></section><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
 
 <font align="left">
 
@@ -113,7 +927,10 @@ $$w(t+1)=w(t)-(f_T(x_i^T\cdot w(t))-y_i)\cdot x_i$$
 
 </font>
 
-</script></section><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
 
 我们再请回之前的 Rosenblatt 学习的更新规则：
 
@@ -136,30 +953,113 @@ $$w(t+1)=w(t)$$
 <p class="fragment">
 $$w(t+1)=\begin{cases}w(t)+x_i, & \text{if } f_T(x_i^T\cdot w(t))=0 \text{ and } y_i=1\\w(t)-x_i, & \text{if } f_T(x_i^T\cdot w(t))=1 \text{ and } y_i=0\end{cases}$$
 
-</script></section><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
 
 第二种情况可以轻易地用神经学习的术语进行解读。
 
 - 一次<font color="orange">错误分类</font>会引起<font color="cyan">权重变化</font> $w(t+1)−w(t)$， 等于<font color="cyan">带符号输入</font> $±x_i$。
 - 这里的符号取决于我们是错误地将输入分配给了类别 $C_{yes}$ 还是 $C_{no}$。
 
-</script></section></section><section  data-markdown><script type="text/template">
+</script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
 
 ## Rosenblatt 学习的收敛性
 
-</script></section><section ><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+<font align="left">
+接下来我们证明Rosenblatt 学习会在有限多步后停止，并为我们提供一个线性分类器w。  
+为此，我们假设在Rosenblatt 学习中指标i = 1，…，n，按循环顺序变化。考虑一般性时，我们可以在分析中假设所有步骤1、…，t的类型为错误分类，而如果存在正确分类的中间步骤，我们只计算分类错误的更新并标序号。  
+我们以w(1) = 0开始迭代过程。 
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+<font size="6">
+<p class="fragment">
+首先可以写出:</p>  
+<p class="fragment">
+$$\|w(t+1)\|_2^2=\|w(t)\pm x_i\|_2^2=\|w(t)\|_2^2\pm2x_i^T\cdot w^T(t)+\|x_i\|_2^2.$$
+</p>  
+<p class="fragment">
+对于最后一项可以一致有界进行放缩：    
+</p>
+<p class="fragment">
+$$\|x_i\|_2\leq\max_{i=1,...,n}\|x_i\|_2=G.$$
+</p>
+<p class="fragment">
+基于我们对错误分类的处理方法，中间项是始终非负的：  
+</p>
+<p class="fragment">
+$$\begin{aligned}+x_i^T\cdot w(t)&<0\text{if and only if }f_T\left(x_i^T\cdot w(t)\right)=0,\\\\-x_i^T\cdot w(t)&\le0\text{if and only if }f_T\left(x_i^T\cdot w(t)\right)=1.\end{aligned}$$ 
+</p>
+
+<p class="fragment">
+综上，我们可以得到：</p>
+<p class="fragment">
+$\|w(t+1)\|_2^2\leq\|w(t)\|_2^2+G^2\leq\ldots\leq\underbrace{\|w(1)\|_2^2}_{=0}+t\cdot G^2=t\cdot G^2.$
+</p>  
+</font>
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+<p class="fragment">
+进一步地，对于线性分类器w我们有：</p><p class="fragment">$$w^T\cdot w(t+1)=w^T\cdot(w(t)\pm x_i)=w^T\cdot w(t)\pm x_i^T\cdot w.$$</p>
+<p class="fragment">
+基于我们对错误分类的处理方法，我们同样可以知道最后一项是非负的：</p>    
+<p class="fragment">
+$$\begin{aligned}+x_i^T\cdot w&>0\text{if and only if }y_i=1,\\\\-x_i^T\cdot w&>0\text{if and only if }y_i=0.\end{aligned}$$    
+</p>
+<p class="fragment">
+那么它就可以被一个正常数限定下界：</p>
+<p class="fragment">
+$$\pm x_i^T\cdot w\geq\min_{i=1,\dots,n}\pm x_i^T\cdot w=g>0.$$
+</p> 
+<p class="fragment">
+综上，我们可以得到：  </p>
+<p class="fragment">
+$$w^T\cdot w(t+1)\geq w^T\cdot w(t)+g\geq\ldots\geq w^T\cdot\underbrace{w(1)}_{=0}+t\cdot g=t\cdot g.$$
+</p>
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+由 Cauchy-Schwarz 不等式：  
+$$t\cdot g\leq w^T\cdot w(t+1)\leq\|w\|_2\cdot\|w(t+1)\|_2\leq\|w\|_2\cdot\sqrt{t\cdot G^2}.$$  
+于是我们得知更新次数 t 是存在上界的：  
+$$t\leq\|w\|_2^2\cdot\frac{G}{g}.$$
+到此我们便证明了Rosenblatt 学习是会在有限多步后停止的，具有收敛性。  
+</script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
 
 ## XOR 问题
 
-</script></section><section data-markdown><script type="text/template">
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
 
 <font align="left">
 
 <p class="fragment">
-虽然<font color="cyan">Rosenblatt学习</font>最初看起来充满希望，但很快就被证明感知器无法对<font color="orange">非线性可分</font>的数据进行分类。
+虽然<font color="cyan">Rosenblatt 学习</font>最初看起来充满希望，但很快就被证明感知器无法对<font color="orange">非线性可分</font>的数据进行分类。
 </p>
 <p class="fragment">
-为了说明这点，我们引用了经典的<font color="orange">XOR反例</font>。XOR问题模拟的是一种只有在输入不同时才会输出真值的逻辑运算。让我们通过真值表来描述XOR，这个表格列出了逻辑表达式在各个函数参数上的函数值：
+为了说明这点，我们引用了经典的<font color="orange">XOR 反例</font>。XOR 问题模拟的是一种只有在输入不同时才会输出真值的逻辑运算。让我们通过真值表来描述 XOR，这个表格列出了逻辑表达式在各个函数参数上的函数值：
 </p>
 </font>
 
@@ -167,60 +1067,120 @@ $$w(t+1)=\begin{cases}w(t)+x_i, & \text{if } f_T(x_i^T\cdot w(t))=0 \text{ and }
 $$\begin{array}{c|c|c}\text{input } x &(1,1)&(1,0)&(0,1)&(0,0)\\\hline\text{output } y &0&1&1&0\end{array}$$
 </p>
 
-</script></section></section><section  data-markdown><script type="text/template">
+<p class="fragment">
+显然，XOR 问题无法用简单的线性感知器进行分类。我们考虑激活函数 $f_T(w_0+w_1x_1+w_2x_2)$，无论 $w_0, \ w_1, \ w_2$ 如何取值，四个点上的分类结果都至少有一个不符合。这说明我们需要一个 <strong>非线性函数</strong> 完成分类。而如果想用神经网络表达一个 <strong>非线性函数</strong>，仅仅两层（输入层和输出层）是远远不够的。
+</p>
+
+</script>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          <script type="text/template">
 
 ## 多层感知机
 
-</script></section></div>
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+就如同字面意思，多层感知机（Multilayer Perceptron）将神经网络的层数从双层拓展到了三层（甚至可以更多）。中间的既非输入也非输出层的节点位于 **隐藏层**。
+
+![Alt text](./markdown-img/note.assets/image-multilayer.png)
+
+其中 $w_0^{\ell}, w_1^{\ell}, \ldots, w_{m-1}^{\ell} \in \mathbb{R}$ 对应隐藏层的第 $\ell \ (\ell \in [1,k])$ 个节点的 $m$ 个权重。
+
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+和之前一样，我们用向量形式
+
+$$x=\left(1, x_1, \ldots, x_{m-1}\right)^T, \quad w^{\ell}=\left(w_0^{\ell}, w_1^{\ell}, \ldots, w_{m-1}^{\ell}\right)^T$$
+
+来表示变量，那么对于隐藏层中的第 $\ell$ 个节点，有 $z_{\ell}=f_T\left(x^T \cdot w^{\ell}\right)$。
+
+而对于输出层，我们有 $y=v_0+z_1 \cdot v_1+\ldots+z_k \cdot v_k=z^T \cdot v$。
+
+将隐藏层和输出层合二为一地看，我们得到输出 $y$ 与输入向量 $x$ 的关系 $y=\sum_{\ell=0}^k f_T\left(x^T \cdot w^{\ell}\right) \cdot v_{\ell}$。
+
+注意这里 $w^1, \ldots, w^k \in \mathbb{R}^m$ 和 $v_1, \ldots, v_k \in \mathbb{R}$ 都是需要进行调整的参量。
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+现在看来，多了一层之后，我们似乎能更好地拟合 XOR 这个非线性模型了。那对于更为复杂的模型，我们是否需要更多的层数来进行拟合呢？答案是否定的，这个结果令人惊讶。
+
+<p class="fragment">
+根据 <strong>通用近似定理（Universal approximation theorem）</strong> ，人工神经网络具有近似任意连续函数的能力。形式化地讲，考虑模型 
+$$y=F(x)$$
+其中 $F: K \rightarrow \mathbb{R}$ 是一个连续的映射，定义域 $K \subset \mathbb{R}^m$。对于任意的 $\varepsilon>0$，总存在一组 $w^1, \ldots, w^k \in \mathbb{R}^m, \ v_1, \ldots, v_k \in \mathbb{R}$，使得下式成立：
+$$
+\left|F(x)-\sum_{\ell=0}^k f_T\left(x^T \cdot w^{\ell}\right) \cdot v_{\ell}\right| \leq \varepsilon \quad \text { for all } x \in K
+$$
+</p>
+
+<p class="fragment">
+不过，实践和理论有所差距。在实际应用时，多层的神经网络依然必不可少。倘若只有三层，我们很难找到合适的 $w$ 与 $v$，并且这二者的规模可能极大。
+</p></script>
+        </section>
+      </section>
     </div>
+  </div>
 
-    <script src="./dist/reveal.js"></script>
+  <script src="./dist/reveal.js"></script>
 
-    <script src="./plugin/markdown/markdown.js"></script>
-    <script src="./plugin/highlight/highlight.js"></script>
-    <script src="./plugin/zoom/zoom.js"></script>
-    <script src="./plugin/notes/notes.js"></script>
-    <script src="./plugin/math/math.js"></script>
-    <script>
-      function extend() {
-        var target = {};
-        for (var i = 0; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source) {
-            if (source.hasOwnProperty(key)) {
-              target[key] = source[key];
-            }
+  <script src="./plugin/markdown/markdown.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script src="./plugin/zoom/zoom.js"></script>
+  <script src="./plugin/notes/notes.js"></script>
+  <script src="./plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
           }
         }
-        return target;
       }
+      return target;
+    }
 
-      // default options to init reveal.js
-      var defaultOptions = {
-        controls: true,
-        progress: true,
-        history: true,
-        center: true,
-        transition: 'default', // none/fade/slide/convex/concave/zoom
-        slideNumber: true,
-        plugins: [
-          RevealMarkdown,
-          RevealHighlight,
-          RevealZoom,
-          RevealNotes,
-          RevealMath
-        ]
-      };
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
 
-      // options from URL query string
-      var queryOptions = Reveal().getQueryHash() || {};
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
 
-      var options = extend(defaultOptions, {"width":1520,"height":950,"margin":0.04,"transition":"convex","slideNumber":true}, queryOptions);
-    </script>
+    var options = extend(defaultOptions, { "width": 1000, "transition": "slide", "slideNumber": "c/t", "center": false, "transitionSpeed": "fast" }, queryOptions);
+  </script>
 
 
-    <script>
-      Reveal.initialize(options);
-    </script>
-  </body>
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
 </html>

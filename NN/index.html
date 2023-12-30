@@ -332,14 +332,14 @@ y=\left\{
 
 <div class="fragment">
 
-采用不同的激活函数，我们对其有不同的叫法
+不同的激活函数对应着不同的神经模型
 </div>
 <div class="fragment">
 
 <div class="three-line">
 <center></center>
 
-|激活函数 ||回归类型 |
+|激活函数 ||神经模型 |
 |:--:|:--:|:--:|
 | $f_S(x^T\cdot w)$ |...|逻辑回归（LR-Logistic Regression）|
 | $f_T(x^T\cdot w)$ |...|感知机（Perceptron）|
@@ -490,9 +490,10 @@ $$
 <div class="fragment">
 
 $$
-p(y_i| w) = p ^ {y_i} (1 - p) ^ {1 - y_i} $$
-$$
-= (f_S(x_i^T \cdot w))^{y_i} \cdot (1 - f_S(x_i ^ T \cdot w))^{1 - y_i}
+\begin{aligned}
+p(y_i| w) &= p ^ {y_i} (1 - p) ^ {1 - y_i} \\\\
+&= (f_S(x_i^T \cdot w))^{y_i} \cdot (1 - f_S(x_i ^ T \cdot w))^{1 - y_i}
+\end{aligned}
 $$
 </div>
 
@@ -633,11 +634,8 @@ $
 
 <div class="fragment">
 
-$$
-\nabla H_i(w) = (f_S(x_i \cdot w) - y_i) \cdot x_i $$
-
-$$\nabla ^ 2 H_i(w) = f_S(x_i \cdot w) \cdot (1 - f_S(x_i)) \cdot x_i \cdot x_i^T
-$$
+$$\begin{aligned}\nabla H_i(w) &= (f_S(x_i \cdot w) - y_i) \cdot x_i \\\\
+\nabla ^ 2 H_i(w) &= f_S(x_i \cdot w) \cdot (1 - f_S(x_i)) \cdot x_i \cdot x_i^T\end{aligned}$$
 </div>
 
 <div class="fragment">
@@ -769,12 +767,16 @@ $$
 </div>
 
 <div class="fragment">
+<font size="5">
 
-  $$
-|w(t+1)-w|^2 = |w(t)- \eta \nabla H_i(w(t)) -w| ^2$$$$
-=(w^T(t)- \eta \nabla^T H_i(w(t)) -w^T)\cdot(w(t)- \eta \nabla H_i(w(t)) -w)$$$$
-=|w(t)-w|^2 - 2\eta \nabla^TH_i(w(t))(w(t)-w)+ \eta^2 |\nabla^TH_i(w(t))|^2 \quad (3)\qquad\quad
 $$
+\begin{aligned}
+|w(t+1)-w|^2 &= |w(t)- \eta \nabla H_i(w(t)) -w| ^2\\\\
+&=(w^T(t)- \eta \nabla^T H_i(w(t)) -w^T)\cdot(w(t)- \eta \nabla H_i(w(t)) -w)\\\\
+&=|w(t)-w|^2 - 2\eta \nabla^TH_i(w(t))(w(t)-w)+ \eta^2 |\nabla^TH_i(w(t))|^2 \quad (3)\qquad\quad
+\end{aligned}
+$$
+</font>
 
 </div>
 
@@ -796,8 +798,10 @@ $$
 <div class="fragment">
 
 $$
-|\nabla^TH_i(w(t))| = |[\sigma(x_i^T\cdot w(t)) - y_i] \cdot x_i|$$$$
-=|\sigma(x_i^T\cdot w(t)) - y_i| \cdot |x_i|
+\begin{aligned}
+|\nabla^TH_i(w(t))| &= |[\sigma(x_i^T\cdot w(t)) - y_i] \cdot x_i|\\\\
+&=|\sigma(x_i^T\cdot w(t)) - y_i| \cdot |x_i|
+\end{aligned}
 $$
 
 </div>
@@ -860,11 +864,17 @@ $$
 </div>
 
 <div class="fragment">
+<font size="5">
 
-  $$
-E(|w(t+1)-w|^2)$$$$\leq E(|w(t)-w|^2) - 2\eta E(\nabla^TH_i(w(t))) \cdot (w(t)-w) + \eta^2G^2$$$$
-=E(|w(t)-w|^2) + 2\eta E(\nabla^TH_i(w(t))) \cdot (w-w(t)) + \eta^2G^2 \quad(5)
 $$
+  \begin{aligned}
+E(|w(t+1)-w|^2)
+&\leq E(|w(t)-w|^2) - 2\eta E(\nabla^TH_i(w(t))) \cdot (w(t)-w) + \eta^2G^2\\\\
+&=E(|w(t)-w|^2) + 2\eta E(\nabla^TH_i(w(t))) \cdot (w-w(t)) + \eta^2G^2 \quad(5)\quad\quad\qquad
+\end{aligned}
+$$
+</font>
+
 </div>
 
 
@@ -883,7 +893,9 @@ $$
 <div class="fragment">
 
 $$
-E(\nabla^TH_i(w(t))) $$$$= \frac 1n \sum_{i=1}^n \nabla^TH_i(w(t)) $$$$= \nabla^T(\frac 1n\sum_{i=1}^nH_i(w(t)) ) $$$$= \nabla^T H(w(t))\quad\quad
+\begin{aligned}
+E(\nabla^TH_i(w(t))) &= \frac 1n \sum_{i=1}^n \nabla^TH_i(w(t)) \\\\&= \nabla^T(\frac 1n\sum_{i=1}^nH_i(w(t)) ) \\\\&= \nabla^T H(w(t))
+\end{aligned}
 $$
 </div>
 
@@ -925,7 +937,9 @@ $$
 <div class="fragment">
   
 $$
-E(\nabla^TH_i(w)) \cdot (w-w(t)) $$$$\leq \nabla^TH(w)\cdot (w-w(t)) $$$$\leq H(w) - H(w(t))
+\begin{aligned}
+E(\nabla^TH_i(w)) \cdot (w-w(t)) & \leq \nabla^TH(w)\cdot (w-w(t))\\\\ &\leq H(w) - H(w(t))
+\end{aligned}
 $$
 
 </div>
@@ -933,11 +947,18 @@ $$
 <div class="fragment">
   
 综上我们有：
-$
-E(|w(t+1)-w|^2)\leq E(|w(t)-w|^2) + 2\eta (H(w) - H(w(t))) + \eta^2G^2
-$
-</div>
 
+</div>
+<div class="fragment">
+  <font size="5">
+  
+  $$
+  E(|w(t+1)-w|^2)\leq E(|w(t)-w|^2) + 2\eta (H(w) - H(w(t))) + \eta^2G^2
+  $$
+  </font>
+
+  </div>
+  
 
 </script>
         </section>
@@ -965,13 +986,15 @@ $$
 </div>
 
 <div class="fragment">
+<font size="5">
+$$
+\begin{aligned}
+\sum\limits_{i=1}^T[H(w(t)) - H(w)] &\leq \frac 1\eta \cdot \frac {E(|w(1)-w|^2) - E(|w(T+1)-w|^2)}2 + \eta \cdot \frac {TG^2}2\quad\quad\quad\\\\
+&\leq \frac 1\eta \cdot \frac {E(|w(1)-w|^2)}2 + \eta \cdot \frac {TG^2}2
+\end{aligned}
+$$
 
-$
-\sum\limits_{i=1}^T[H(w(t)) - H(w)] \leq \frac 1\eta \cdot \frac {E(|w(1)-w|^2) - E(|w(T+1)-w|^2)}2 + \eta \cdot \frac {TG^2}2$
-
-$
-\leq \frac 1\eta \cdot \frac {E(|w(1)-w|^2)}2 + \eta \cdot \frac {TG^2}2
-$
+</font>
 
 </div>
 
@@ -1106,41 +1129,63 @@ $$
 
       <section data-markdown>
         <script type="text/template">
-## 感知机 | Perceptron
+## 8.2.2 感知机 | Perceptron
 
-<font size="6" align="left">
 
-现在让我们考虑一下<font color="orange">阈值激活函数(threshold activation function)</font>的情况。
 
-相应的神经模型被称为<font color="cyan">感知机(perceptron)</font>。
+<div class="fragment">
 
-通过模拟<font color="orange">随机梯度下降(SGD)</font>，我们推导出了<font color="cyan">Rosenblatt 学习(Rosenblatt learning)</font>，它在有限的时间内识别出一个线性分类器。
 
-值得注意的是，如果数据样本不是线性可分的，Rosenblatt学习就会失败。这种困难可以通过<font color="cyan">具有隐藏层(hidden layers)</font>的感知机来克服。
+现在让我们考虑一下<font color="DarkRed">阈值激活函数(threshold activation function)</font>的情况。
 
-</font>
+</div>
+
+<div class="fragment">
+
+
+相应的神经模型被称为<font color="DarkBlue">感知机(perceptron)</font>。
+
+</div>
+
+<div class="fragment">
+
+
+通过模拟<font color="DarkRed">随机梯度下降(SGD)</font>，我们推导出了<font color="DarkBlue">Rosenblatt 学习(Rosenblatt learning)</font>，它在有限的时间内识别出一个线性分类器。
+
+</div>
+
+<div class="fragment">
+
+
+值得注意的是，如果数据样本不是线性可分的，Rosenblatt学习就会失败。这种困难可以通过具有<font color="DarkBlue">隐藏层(hidden layers)</font>的感知机来克服。
+
+</div>
 
 </script>
       </section>
       <section>
+
+
         <section data-markdown>
           <script type="text/template">
 
-## Rosenblatt 学习
+## 8.2.2.1 Rosenblatt 学习
 
-</script>
-        </section>
-        <section data-markdown>
-          <script type="text/template">
 
-- 我们假设数据样本 $(x_i, y_i)\in \mathbb{R}^m \times \{0, 1\}, i=1, \ldots, n$ 是严格线性可分的。这意味着存在一个权值向量 $w\in \mathbb{R}^m$，使得它对所有的 $i=1, \ldots, n$ 都满足下面的条件：
+
+<div class="fragment">
+
+- 我们假设数据样本 $(x_i, y_i)\in \mathbb{R}^m \times \{0, 1\}, i=1, \ldots, n\quad\quad\quad$ 是严格线性可分的。这意味着存在一个权值向量 $w\in \mathbb{R}^m$，使得它对所有的 $i=1, \ldots, n$ 都满足下面的条件：
+</div>
+<div class="fragment">
 
 $$
-w^T\cdot x_i > 0, \text{ if and only if } y_i = 1, w^T\cdot x_i < 0, \text{ if and only if } y_i = 0.
+w^T\cdot x_i > 0, \text{ if and only if } y_i = 1, w^T\cdot x_i < 0, \text{ if and only if } y_i = 0.\quad\quad\quad
 $$
+</div>
 
 <p class="fragment">
-也就是说，我们有一个<font color="orange">超平面</font></p>
+也就是说，我们有一个<font color="DarkRed">超平面</font></p>
 <p class="fragment">
 $$
 H=\{x\in \mathbb{R}^m: w^T\cdot x = 0\}
@@ -1158,7 +1203,7 @@ $$
 ![Alt text](./markdown-img/note.assets/image.png)
 
 <p class="fragment">
-这里的 $w$ 就是一个<font color="orange">线性分类器（linear classifier）</font>。
+这里的 $w$ 就是一个<font color="DarkRed">线性分类器（linear classifier）</font>。
 </p>
 
 <p class="fragment">
@@ -1167,32 +1212,27 @@ $$
 
 </script>
         </section>
+
+
         <section data-markdown>
           <script type="text/template">
 
 ## SGD Update
 
-</script>
-        </section>
-        <section data-markdown>
-          <script type="text/template">
 
-<font align="left">
-
-- 我们可以使用<font color="orange">随机梯度下降 (SGD)</font>来找到这样的 $w$。
+- 我们可以使用<font color="DarkRed">随机梯度下降 (SGD)</font>来找到这样的 $w\quad$。
 
 $$w(t+1)=w(t)-\eta\cdot (f_S(x_i^T\cdot w(t))-y_i)\cdot x_i$$
 
 <p class="fragment">
-· 将（SGD）中的 <font color="orange">Sigmoid 激活函数</font> $f_S$ 替换为<font color="orange">阈值激活函数</font> $f_T$。
+· 将 SGD 中的 <font color="DarkRed">Sigmoid 激活函数</font> $f_S$ 替换为<font color="DarkRed">阈值激活函数</font> $f_T$
 </p>
 <p class="fragment">
 · 将步长 $\eta$ 设为 1。
 </p>
 <p class="fragment">
-· 便得到了<font color="cyan">Rosenblatt 学习</font>，也被称为<font color="cyan">感知器算法(perceptron algorithm)</font>。
+· 便得到了<font color="DarkBlue">Rosenblatt 学习</font>，也被称为<font color="DarkBlue">感知器算法(perceptron algorithm)</font>。
 </p>
-</font>
 
 <p class="fragment">
 $$w(t+1)=w(t)-(f_T(x_i^T\cdot w(t))-y_i)\cdot x_i$$
@@ -1203,21 +1243,21 @@ $$w(t+1)=w(t)-(f_T(x_i^T\cdot w(t))-y_i)\cdot x_i$$
         <section data-markdown>
           <script type="text/template">
 
-<font align="left">
+## 感知器算法
+
+
 
 <p class="fragment">
 ① 感知器算法是由 Rosenblatt 于1957年在康奈尔航空实验室发明的。
 </p>
 
 <p class="fragment">
-② 感知器的初衷是作为一种<font color="cyan">机器</font>而非<font color="orange">程序</font>。虽然它的首次实现是在软件中，但后来又被实现为硬件——“Mark 1 perception”。
+② 感知器的初衷是作为一种<font color="DarkBlue">机器</font>而非<font color="DarkRed">程序</font>。虽然它的首次实现是在软件中，但后来又被实现为硬件——“Mark 1 perception”。
 </p>
 
 <p class="fragment">
-③ 1958年，纽约时报报道感知器被预期为 <font color="orange">“一台电子计算机的胚胎</font>，[The Navy]预期它将能够<font color="cyan">行走、讲话、看见、写作、复制自身</font>并且<font color="cyan">意识到自己的存在</font>”。
+③ 1958年，纽约时报报道感知器被预期为 “<font color="DarkRed">一台电子计算机的胚胎</font>，[The Navy]预期它将能够<font color="DarkBlue">行走、讲话、看见、写作、复制自身</font>并且<font color="DarkBlue">意识到自己的存在</font>”。
 </p>
-
-</font>
 
 </script>
         </section>
@@ -1234,44 +1274,82 @@ $$w(t+1)=w(t)-(f_T(x_i^T\cdot w(t))-y_i)\cdot x_i$$
 为了理解感知器的重要性，让我们重写一下上式：
 </p>
 <p class="fragment">
-对于分类<font color="cyan">正确</font>的样本，有 $f_T(x_i^T\cdot w(t))=y_i$，权值向量 $w$ 不会改变：
+对于分类<font color="DarkBlue">正确</font>的样本，有 $f_T(x_i^T\cdot w(t))=y_i\quad\quad$，权值向量 $w$ 不会改变：
 </p>
 <p class="fragment">
 $$w(t+1)=w(t)$$
 </p>
 <p class="fragment">
-对于分类<font color="orange">不正确</font>的样本，有 $f_T(x_i^T\cdot w(t))\neq y_i$，权值向量 $w$ 会改变：
+对于分类<font color="DarkRed">不正确</font>的样本，有 $f_T(x_i^T\cdot w(t))\neq y_i\quad\quad$，权值向量 $w$ 会改变：
 </p>
 <p class="fragment">
 $$w(t+1)=\begin{cases}w(t)+x_i, & \text{if } f_T(x_i^T\cdot w(t))=0 \text{ and } y_i=1\\w(t)-x_i, & \text{if } f_T(x_i^T\cdot w(t))=1 \text{ and } y_i=0\end{cases}$$
+</p>
 
 </script>
         </section>
         <section data-markdown>
           <script type="text/template">
 
-第二种情况可以轻易地用神经学习的术语进行解读。
+<div class="fragment">
 
-- 一次<font color="orange">错误分类</font>会引起<font color="cyan">权重变化</font> $w(t+1)−w(t)$， 等于<font color="cyan">带符号输入</font> $±x_i$。
-- 这里的符号取决于我们是错误地将输入分配给了类别 $C_{yes}$ 还是 $C_{no}$。
+第二种情况可以轻易地用神经学习的术语进行解读。
+</div>
+<div class="fragment">
+
+  - 一次<font color="DarkRed">错误分类</font>会引起<font color="DarkBlue">权重变化</font> $w(t+1)−w(t)\quad\quad$，等于<font color="DarkBlue">带符号输入</font> $±x_i\quad$
+</div>
+
+<div class="fragment">
+
+  - 这里的符号取决于我们是错误地将输入分配给了类别 $C_{yes}$ 还是 $C_{no}$
+</div>
+
+<div class="fragment">
+
+或者，我们从向量的视角考虑
+</div>
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+<div class="fragment">
+
+![Alt text](./markdown-img/note.assets/image-3.png)
+</div>
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+![Alt text](./markdown-img/note.assets/image-4.png)
+
+</script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+
+![Alt text](./markdown-img/note.assets/image-5.png)
 
 </script>
         </section>
       </section>
       <section>
-        <section data-markdown>
-          <script type="text/template">
 
-## Rosenblatt 学习的收敛性
 
-</script>
-        </section>
         <section data-markdown>
           <script type="text/template">
 <font align="left">
-接下来我们证明Rosenblatt 学习会在有限多步后停止，并为我们提供一个线性分类器w。  
-为此，我们假设在Rosenblatt 学习中指标i = 1，…，n，按循环顺序变化。考虑一般性时，我们可以在分析中假设所有步骤1、…，t的类型为错误分类，而如果存在正确分类的中间步骤，我们只计算分类错误的更新并标序号。  
-我们以w(1) = 0开始迭代过程。 
+
+## 8.2.2.2 Rosenblatt 学习的收敛性
+
+接下来我们证明Rosenblatt 学习会在有限多步后停止，并为我们提供一个线性分类器w。 
+
+为此，我们假设在Rosenblatt 学习中指标 $i = 1，…，n\quad$ ，按循环顺序变化。考虑一般性时，我们可以在分析中假设所有步骤 $i = 1，…，n\quad$ 的类型为错误分类（而如果存在正确分类的中间步骤，我们只考虑分类错误的更新并重标序号）  
+
+我们以 $w(1) = 0\quad$ 开始迭代过程。 
 </script>
         </section>
         <section data-markdown>
@@ -1289,10 +1367,10 @@ $$\|w(t+1)\|_2^2=\|w(t)\pm x_i\|_2^2=\|w(t)\|_2^2\pm2x_i^T\cdot w^T(t)+\|x_i\|_2
 $$\|x_i\|_2\leq\max_{i=1,...,n}\|x_i\|_2=G.$$
 </p>
 <p class="fragment">
-基于我们对错误分类的处理方法，中间项是始终非负的：  
+基于我们对错误分类的处理方法，中间项是始终非正的：  
 </p>
 <p class="fragment">
-$$\begin{aligned}+x_i^T\cdot w(t)&<0\text{if and only if }f_T\left(x_i^T\cdot w(t)\right)=0,\\\\-x_i^T\cdot w(t)&\le0\text{if and only if }f_T\left(x_i^T\cdot w(t)\right)=1.\end{aligned}$$ 
+$$\begin{aligned}+x_i^T\cdot w(t)&<0\text{ iff }f_T\left(x_i^T\cdot w(t)\right)=0,\\\\-x_i^T\cdot w(t)&\le0\text{ iff }f_T\left(x_i^T\cdot w(t)\right)=1.\end{aligned}$$ 
 </p>
 
 <p class="fragment">
@@ -1306,11 +1384,11 @@ $\|w(t+1)\|_2^2\leq\|w(t)\|_2^2+G^2\leq\ldots\leq\underbrace{\|w(1)\|_2^2}_{=0}+
         <section data-markdown>
           <script type="text/template">
 <p class="fragment">
-进一步地，对于线性分类器w我们有：</p><p class="fragment">$$w^T\cdot w(t+1)=w^T\cdot(w(t)\pm x_i)=w^T\cdot w(t)\pm x_i^T\cdot w.$$</p>
+进一步地，对于线性分类器 $w$ 我们有：</p><p class="fragment">$$w^T\cdot w(t+1)=w^T\cdot(w(t)\pm x_i)=w^T\cdot w(t)\pm x_i^T\cdot w.$$</p>
 <p class="fragment">
-基于我们对错误分类的处理方法，我们同样可以知道最后一项是非负的：</p>    
+基于我们对错误分类的处理方法，可知最后一项是非负的：</p>    
 <p class="fragment">
-$$\begin{aligned}+x_i^T\cdot w&>0\text{if and only if }y_i=1,\\\\-x_i^T\cdot w&>0\text{if and only if }y_i=0.\end{aligned}$$    
+$$\begin{aligned}+x_i^T\cdot w&>0\text{ iff }y_i=1,\\\\-x_i^T\cdot w&>0\text{ iff } y_i=0.\end{aligned}$$    
 </p>
 <p class="fragment">
 那么它就可以被一个正常数限定下界：</p>
@@ -1335,53 +1413,65 @@ $$t\leq\|w\|_2^2\cdot\frac{G}{g}.$$
         </section>
       </section>
       <section>
+
         <section data-markdown>
           <script type="text/template">
 
-## XOR 问题
+## 8.2.2.3 XOR 问题
 
+<p class="fragment">
+虽然<font color="DarkBlue">Rosenblatt 学习</font>最初看起来充满希望，但很快就被证明感知器无法对<font color="DarkRed">非线性可分</font>的数据进行分类。
+</p>
+<p class="fragment">
+为了说明这点，我们引用了经典的<font color="DarkRed">XOR 反例</font>。XOR 问题模拟的是一种只有在输入不同时才会输出真值的逻辑运算。让我们通过真值表来描述 XOR，这个表格列出了逻辑表达式在各个函数参数上的函数值：
+</p>
+
+<p class="fragment">
+$$\begin{array}{c|c|c}\text{input } x &(1,1)&(1,0)&(0,1)&(0,0)\\\hline\text{output } y &0&1&1&0\end{array}$$
+</p>
 </script>
         </section>
         <section data-markdown>
           <script type="text/template">
 
-<font align="left">
+## 8.2.2.3 XOR 问题
+
+<div class="fragment">
+  <center>
+<img src="./markdown-img/note.assets/image-6.png" width="30%"  />
+  </center>
+</div>
 
 <p class="fragment">
-虽然<font color="cyan">Rosenblatt 学习</font>最初看起来充满希望，但很快就被证明感知器无法对<font color="orange">非线性可分</font>的数据进行分类。
-</p>
-<p class="fragment">
-为了说明这点，我们引用了经典的<font color="orange">XOR 反例</font>。XOR 问题模拟的是一种只有在输入不同时才会输出真值的逻辑运算。让我们通过真值表来描述 XOR，这个表格列出了逻辑表达式在各个函数参数上的函数值：
-</p>
-</font>
-
-<p class="fragment">
-$$\begin{array}{c|c|c}\text{input } x &(1,1)&(1,0)&(0,1)&(0,0)\\\hline\text{output } y &0&1&1&0\end{array}$$
-</p>
-
-<p class="fragment">
-显然，XOR 问题无法用简单的线性感知器进行分类。我们考虑激活函数 $f_T(w_0+w_1x_1+w_2x_2)$，无论 $w_0, \ w_1, \ w_2$ 如何取值，四个点上的分类结果都至少有一个不符合。这说明我们需要一个 <strong>非线性函数</strong> 完成分类。而如果想用神经网络表达一个 <strong>非线性函数</strong>，仅仅两层（输入层和输出层）是远远不够的。
+显然，XOR 问题无法用简单的线性感知器进行分类。我们考虑激活函数 $f_T(w_0+w_1x_1+w_2x_2)\quad\quad\quad$，无论 $w_0, \ w_1, \ w_2\quad\quad$ 如何取值，四个点上的分类结果都至少有一个不符合。这说明我们需要一个 <strong>非线性函数</strong> 完成分类。而如果想用神经网络表达一个 <strong>非线性函数</strong>，仅仅两层（输入层和输出层）是远远不够的。
 </p>
 
 </script>
         </section>
       </section>
       <section>
+
+
         <section data-markdown>
           <script type="text/template">
 
 ## 多层感知机
 
-</script>
-        </section>
-        <section data-markdown>
-          <script type="text/template">
+<div class="fragment">
 
-就如同字面意思，多层感知机（Multilayer Perceptron）将神经网络的层数从双层拓展到了三层（甚至可以更多）。中间的既非输入也非输出层的节点位于 **隐藏层**。
+就如同字面意思，多层感知机（Multilayer Perceptron）将神经网络的层数从双层拓展到了三层（甚至可以更多）。中间的既非输入也非输出层的节点属于 **隐藏层**（hidden layer）。
+</div>
 
-![Alt text](./markdown-img/note.assets/image-multilayer.png)
+<div class="fragment">
+  <center>
+<img src="./markdown-img/note.assets/image-multilayer.png" width="70%"  />
+  </center>
 
-其中 $w_0^{\ell}, w_1^{\ell}, \ldots, w_{m-1}^{\ell} \in \mathbb{R}$ 对应隐藏层的第 $\ell \ (\ell \in [1,k])$ 个节点的 $m$ 个权重。
+</div>
+<div class="fragment">
+
+其中 $w_0^{\ell}, w_1^{\ell}, \ldots, w_{m-1}^{\ell} \in \mathbb{R}\quad\quad\quad$ 对应隐藏层的第 $\ell \ (\ell \in [1,k])\quad$ 个节点的 $m$ 个权重。
+</div>
 
 
 </script>
@@ -1393,20 +1483,22 @@ $$\begin{array}{c|c|c}\text{input } x &(1,1)&(1,0)&(0,1)&(0,0)\\\hline\text{outp
 
 $$x=\left(1, x_1, \ldots, x_{m-1}\right)^T, \quad w^{\ell}=\left(w_0^{\ell}, w_1^{\ell}, \ldots, w_{m-1}^{\ell}\right)^T$$
 
-来表示变量，那么对于隐藏层中的第 $\ell$ 个节点，有 $z_{\ell}=f_T\left(x^T \cdot w^{\ell}\right)$。
+来表示变量，那么对于隐藏层中的第 $\ell$ 个节点，有 $z_{\ell}=f_T\left(x^T \cdot w^{\ell}\right)$
 
-而对于输出层，我们有 $y=v_0+z_1 \cdot v_1+\ldots+z_k \cdot v_k=z^T \cdot v$。
+而对于输出层，我们有 $y=v_0+z_1 \cdot v_1+\ldots+z_k \cdot v_k=z^T \cdot v$
 
-将隐藏层和输出层合二为一地看，我们得到输出 $y$ 与输入向量 $x$ 的关系 $y=\sum_{\ell=0}^k f_T\left(x^T \cdot w^{\ell}\right) \cdot v_{\ell}$。
+将隐藏层和输出层合二为一地看，我们得到输出 $y$ 与输入向量 $x$ 的关系 $y=\sum_{\ell=0}^k f_T\left(x^T \cdot w^{\ell}\right) \cdot v_{\ell}$
 
-注意这里 $w^1, \ldots, w^k \in \mathbb{R}^m$ 和 $v_1, \ldots, v_k \in \mathbb{R}$ 都是需要进行调整的参量。
+注意这里 $w^1, \ldots, w^k \in \mathbb{R}^m\quad\quad$ 和 $v_1, \ldots, v_k \in \mathbb{R}\quad\quad$ 都是需要进行调整的参量
+
+<p class="fragment">
+  现在看来，多了一层之后，我们似乎能更好地拟合 XOR 这个非线性模型了。那对于更为复杂的模型，我们是否需要更多的层数来进行拟合呢？答案是否定的，这个结果令人惊讶。
+</p>
 
 </script>
         </section>
         <section data-markdown>
           <script type="text/template">
-
-现在看来，多了一层之后，我们似乎能更好地拟合 XOR 这个非线性模型了。那对于更为复杂的模型，我们是否需要更多的层数来进行拟合呢？答案是否定的，这个结果令人惊讶。
 
 <p class="fragment">
 根据 <strong>通用近似定理（Universal approximation theorem）</strong> ，人工神经网络具有近似任意连续函数的能力。形式化地讲，考虑模型 
@@ -1466,7 +1558,7 @@ $$
     // options from URL query string
     var queryOptions = Reveal().getQueryHash() || {};
 
-    var options = extend(defaultOptions, { "width": 1000, "transition": "slide", "slideNumber": "c/t", "center": false, "transitionSpeed": "fast" }, queryOptions);
+    var options = extend(defaultOptions, { "width": 1000, "transition": "fade", "slideNumber": "c/t", "center": false, "transitionSpeed": "fast" }, queryOptions);
   </script>
 
 

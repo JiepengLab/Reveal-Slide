@@ -1509,7 +1509,7 @@ $$x=\left(1, x_1, \ldots, x_{m-1}\right)^T, \quad w^{\ell}=\left(w_0^{\ell}, w_1
 <p class="fragment">
 根据 <strong>通用近似定理（Universal approximation theorem）</strong> ，人工神经网络具有近似任意连续函数的能力。形式化地讲，考虑模型 
 $$y=F(x)$$
-其中 $F: K \rightarrow \mathbb{R}\quad$ 是一个连续的映射，定义域 $K \subset \mathbb{R}^m\quad$。对于任意的 $\varepsilon>0\quad$，总存在一组 $w^1, \ldots, w^k \in \mathbb{R}^m, \ v_1, \ldots, v_k \in \mathbb{R}\quad\quad$，使得下式成立：
+其中 $F: K \rightarrow \mathbb{R}\quad$ 是一个连续的映射，定义域 $K \subset \mathbb{R}^m\quad$。对于任意的 $\varepsilon>0\quad$，总存在一组 $w^1, \ldots, w^k \in \mathbb{R}^m, \ v_1, \ldots, v_k \in \mathbb{R}\quad\quad\quad\quad$使得下式成立：
 $$
 \left|F(x)-\sum_{\ell=0}^k f_T\left(x^T \cdot w^{\ell}\right) \cdot v_{\ell}\right| \leq \varepsilon \quad \text { for all } x \in K
 $$

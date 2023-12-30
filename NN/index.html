@@ -38,65 +38,54 @@
 </div>
 </script>
       </section>
+      </section>
       <section>
         <section data-markdown>
+
           <script type="text/template">
+  ## 8.1 神经网络与数学模型
+  <div class="fragment">
 
-## 8.1 神经网络与数学模型
+  在线性回归问题中，我们假设输出 $y$ 是输入 $\vec x$ 的线性函数，即 $y = \vec x^T \cdot \vec w\quad\quad$，其中 $\vec w$ 为权值向量
+  </div>
+  <div class="fragment">
 
-<div class="fragment">
 
-在生物学中，**神经网络**是由一组化学连接或功能相关的神经元组成的电路。
+  我们的目标是根据给定的 $\vec x_i$ 和 $y_i$ ，找到一个**最合适**的权值向量 $\vec w$ ，使得函数 $\vec x^T \cdot \vec w$ 和 $y_i$ 拟合的最好
 
-</div>
+  </div>
 
-<div class="fragment">
-
-在人体内，神经网络扮演着关键的信息处理和传递角色。它们不仅协调和调节各种生理功能，如肌肉运动、感觉知觉、内分泌系统的控制，还参与更复杂的过程，包括思考、决策、学习和记忆。
-</div>
-<div class="fragment">
-
-通过这些神经元网络，大脑能够接收、处理和响应来自身体各部分以及外部环境的信号，确保身体的正常运作和对环境的适应。
-
-</div>
-
-</script>
+  <div class="fragment">
+  
+注意在上面的拟合中，我们得到的结果 $\vec x^T \cdot \vec w$ 是连续分布的，但如果我们的 $y_i$ 并不是连续分布，而是只取 $0$ 和 $1$ 呢？
+          
+  </div>
+                  </script>
         </section>
         <section data-markdown>
+
           <script type="text/template">
+              ## 8.1 神经网络与数学模型
+              <div class="fragment">
+  
+              我们将 $y_i$ 取值为 $0$ 和 $1$ 的这样一类问题叫做**二分类问题**，此时 $y_i$ 也叫分类标签(lable)
+              </div>
+              <div class="fragment">
+  
+              此时，我们通过引入**激活函数**(activation function)的方式，在线性回归的基础上得到二分类结果
+              </div>
+              <div class="fragment">
+  
+              激活函数的实质就是一个 if-else 分类，我们设定阈值 $T$ ，如果线性回归的值 $\vec x^T \cdot w > T$ ，则我们认为结果 $y_i = 1$ ，否则为 $0$
+              </div>
+              <div class="fragment">
+  
+              上面的过程和生物中神经元激活的过程十分相似，故我们从神经元入手详细的介绍这一过程
+              </div>
+            </script>
 
-## 8.1 神经网络与数学模型
-
-
-<div class="fragment">
-
-我们可以通过**权重**来模拟神经网络的连接。
-
-</div>
-<div class="fragment">
-
-**正权重**代表**兴奋性**连接，而**负值**代表**抑制性**连接。
-</div>
-<div class="fragment">
-
-所有输入都通过权重进行修改并求和，**神经元的聚合**则对应于取**线性组合**。
-</div>
-<div class="fragment">
-
-最终，由**激活函数**控制输出的幅度。
-</div>
-<div class="fragment">
-
-尽管每个神经元相对简单，但它们可以构建出处理能力惊人的网络。这促进了神经网络自 20 世纪 70 年代起在人工智能问题解决中的发展。特别是在过去十年里，以神经网络为基础的应用取得了显著进展。
-</div>
-<div class="fragment">
-
-本章将介绍如何用数学模型来模拟神经元的功能，这是以分类神经元为例，用**广义线性回归**来完成的。这里的“广义化”指的是激活函数的使用。
-
-</div>
-
-</script>
         </section>
+
       </section>
       <section>
         <section data-markdown>
@@ -302,16 +291,13 @@ $$
 
 </div>
 <div class="fragment">
+
 $$
-\begin{equation}
-y=\left\{
-\begin{aligned}
-1 \quad f_S(x^T\cdot w)\geq \frac{1}{2}\\
+y=
+\begin{cases}
+1 \quad f_S(x^T\cdot w)\geq \frac{1}{2}\\\\
 0 \quad \text{else}
-\end{aligned}
-\right
-.
-\end{equation}$$
+\end{cases}$$
 </div>
 
 </script>
@@ -1282,9 +1268,10 @@ $$w(t+1)=w(t)$$
 <p class="fragment">
 对于分类<font color="DarkRed">不正确</font>的样本，有 $f_T(x_i^T\cdot w(t))\neq y_i\quad\quad$，权值向量 $w$ 会改变：
 </p>
-<p class="fragment">
-$$w(t+1)=\begin{cases}w(t)+x_i, & \text{if } f_T(x_i^T\cdot w(t))=0 \text{ and } y_i=1\\w(t)-x_i, & \text{if } f_T(x_i^T\cdot w(t))=1 \text{ and } y_i=0\end{cases}$$
-</p>
+<div class="fragment">
+
+$$w(t+1)=\begin{cases}w(t)+x_i, & \text{if } f_T(x_i^T\cdot w(t))=0 \text{ and } y_i=1\\\\w(t)-x_i, & \text{if } f_T(x_i^T\cdot w(t))=1 \text{ and } y_i=0\end{cases}$$
+</div>
 
 </script>
         </section>
@@ -1479,21 +1466,30 @@ $$\begin{array}{c|c|c}\text{input } x &(1,1)&(1,0)&(0,1)&(0,0)\\\hline\text{outp
         <section data-markdown>
           <script type="text/template">
 
+<div class="fragment">
+
 和之前一样，我们用向量形式
-
 $$x=\left(1, x_1, \ldots, x_{m-1}\right)^T, \quad w^{\ell}=\left(w_0^{\ell}, w_1^{\ell}, \ldots, w_{m-1}^{\ell}\right)^T$$
+来表示变量。
+<div>
+  <div class="fragment">
 
-来表示变量，那么对于隐藏层中的第 $\ell$ 个节点，有 $z_{\ell}=f_T\left(x^T \cdot w^{\ell}\right)$
+那么对于隐藏层中的第 $\ell$ 个节点，有 $z_{\ell}=f_T\left(x^T \cdot w^{\ell}\right)$
+<div>
+  <div class="fragment">
 
 而对于输出层，我们有 $y=v_0+z_1 \cdot v_1+\ldots+z_k \cdot v_k=z^T \cdot v$
+<div>
+  <div class="fragment">
 
-将隐藏层和输出层合二为一地看，我们得到输出 $y$ 与输入向量 $x$ 的关系 $y=\sum_{\ell=0}^k f_T\left(x^T \cdot w^{\ell}\right) \cdot v_{\ell}$
+将隐藏层和输出层合二为一地看，我们得到输出 $y$ 与输入向量 $x$ 的关系 $y=\sum\limits_{\ell=0}^k f_T\left(x^T \cdot w^{\ell}\right) \cdot v_{\ell}$
+<div>
+  <div class="fragment">
 
 注意这里 $w^1, \ldots, w^k \in \mathbb{R}^m\quad\quad$ 和 $v_1, \ldots, v_k \in \mathbb{R}\quad\quad$ 都是需要进行调整的参量
+<div>
 
-<p class="fragment">
-  现在看来，多了一层之后，我们似乎能更好地拟合 XOR 这个非线性模型了。那对于更为复杂的模型，我们是否需要更多的层数来进行拟合呢？答案是否定的，这个结果令人惊讶。
-</p>
+
 
 </script>
         </section>
@@ -1501,9 +1497,13 @@ $$x=\left(1, x_1, \ldots, x_{m-1}\right)^T, \quad w^{\ell}=\left(w_0^{\ell}, w_1
           <script type="text/template">
 
 <p class="fragment">
+  现在看来，多了一层之后，我们似乎能更好地拟合 XOR 这个非线性模型了。那对于更为复杂的模型，我们是否需要更多的层数来进行拟合呢？答案是否定的，这个结果令人惊讶。
+</p>
+
+<p class="fragment">
 根据 <strong>通用近似定理（Universal approximation theorem）</strong> ，人工神经网络具有近似任意连续函数的能力。形式化地讲，考虑模型 
 $$y=F(x)$$
-其中 $F: K \rightarrow \mathbb{R}$ 是一个连续的映射，定义域 $K \subset \mathbb{R}^m$。对于任意的 $\varepsilon>0$，总存在一组 $w^1, \ldots, w^k \in \mathbb{R}^m, \ v_1, \ldots, v_k \in \mathbb{R}$，使得下式成立：
+其中 $F: K \rightarrow \mathbb{R}\quad$ 是一个连续的映射，定义域 $K \subset \mathbb{R}^m\quad$。对于任意的 $\varepsilon>0\quad$，总存在一组 $w^1, \ldots, w^k \in \mathbb{R}^m, \ v_1, \ldots, v_k \in \mathbb{R}\quad\quad$，使得下式成立：
 $$
 \left|F(x)-\sum_{\ell=0}^k f_T\left(x^T \cdot w^{\ell}\right) \cdot v_{\ell}\right| \leq \varepsilon \quad \text { for all } x \in K
 $$

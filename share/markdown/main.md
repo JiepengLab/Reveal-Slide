@@ -20,7 +20,7 @@ revealOptions:
 
 <hr/>
 
-By [@TonyCrane](https://github.com/TonyCrane)
+By1 [@TonyCrane](https://github.com/TonyCrane)
 
 </div>
 </div>

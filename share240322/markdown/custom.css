@@ -13,6 +13,10 @@
   background-color: rgba(0, 0, 0, .3);
 }
 
+p {
+  text-indent: 60px;
+}
+
 .reveal .slides {
   border: 1.5px #ddd solid;
   border-radius: 7px;
@@ -273,7 +277,7 @@ html.print-pdf .reveal pre code {
   font-size: 1em;
 }
 
-kbd {
+/* kbd {
   margin: 0px 0.2em;
   padding: 0.1em 0.6em;
   border-radius: 3px;
@@ -287,4 +291,4 @@ kbd {
   -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-}
+} */

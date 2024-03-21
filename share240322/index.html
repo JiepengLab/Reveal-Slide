@@ -1,44 +1,67 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Slide 模板</title>
-    <link rel="shortcut icon" href="./favicon.ico" />
-    <link rel="stylesheet" href="./dist/reset.css" />
-    <link rel="stylesheet" href="./dist/reveal.css" />
-    <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
-    <link rel="stylesheet" href="./css/highlight/github.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <link rel="stylesheet" href="./assets/custom.css" />
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">
-        <section data-markdown data-separator="<!-- s -->" data-separator-vertical="<!-- v -->">
-          <textarea data-template>
-            
+  <title>Slide 模板</title>
+  <link rel="shortcut icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="./dist/reset.css" />
+  <link rel="stylesheet" href="./dist/reveal.css" />
+  <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
+  <link rel="stylesheet" href="./css/highlight/github.css" />
+
+  <link rel="stylesheet" href="./assets/custom.css" />
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown data-separator="<!-- s -->" data-separator-vertical="<!-- v -->">
+        <textarea data-template>
+
 
 ## 经验分享
 <div class="fragment">
+<div class="three-line">
 
 |章节 ||标题 |
 |:--:|:--:|:--:|
-|8.1|...|神经网络与数学模型|
-|8.2.1|...|逻辑回归（Logistic Regression）|
-|8.2.2|...|感知机（Perceptron）|
-|8.3|...|程序演示|
-<hr/>
+|1|···|自我介绍|
+|8.2.1|···|逻辑回归（Logistic Regression）|
+|8.2.2|···|感知机（Perceptron）|
+|8.3|···|程序演示|
+</div>
 </div>
 
 网站地址 [slide.jiepeng.tech/share240322](https://slide.jiepeng.tech/share240322)
 
 分享人：金杰鹏  
 
-怎么使用这个PPT? 按<kbd>🡇</kbd>方向键查看说明
+<div class="fragment">
+
+怎么使用这个 Slide ? 按 <font color="DarkRed">↓</font> 方向键或 <font color="DarkRed">下滑</font> 查看说明
+</div>
 
 <!-- v -->
+
+## PC 端
+
+通过 <font color="DarkRed"> 点击 / 空格 </font>来选择下一页
+
+使用 <font color="DarkRed">h/← j/↓ k/↑ l/→ </font> 或者<font color="DarkRed">点击右下角的方向盘</font> 来进行上下左右切换，直接点击页面底部的进度条也可以实现页面跳转。
+
+按下 <font color="DarkRed">f</font> 来全屏显示，按下 <font color="DarkRed">Esc</font> 退出。
+
+按下 <font color="DarkRed">o</font> 进入总览视图，可以利用方向键进行移动，回车或点击进行选择。需要注意，这里显示的内容和实际展示的页面内容在布局上存在差异。
+
+<hr/>
+
+## 移动端
+
+
+基本的点击操作是一样的。<font color="DarkRed">带有方向的滑动</font>可以对应方向键功能。
 
 <!-- s -->
 
@@ -46,35 +69,29 @@
 <div class="middle center">
 <div style="width: 100%">
 
-# Part.1 大标题
-
-一些 markdown
+# 自我介绍
 
 </div>
 </div>
-
 
 <!-- v -->
 
-## 标题
+## 关于我
 
-> test
+-
+<div class="fragment">
 
-<hr/>
+· 金杰鹏
+</div>
+<div class="fragment">
 
-```rust [1|2-3]
-fn main() {
-    println!("Hello World!")
-}
-```
+· 毕业于浙江省杭州高级中学，进入蓝田学园·工科试验班2205
+</div>
+<div class="fragment">
 
-...
+· 大一上 31 学分，均绩 4.73/5.0
+</div>
 
-- list 1
-- list 2
-    - list 2.1
-
-1. 有序
 
 <!-- v -->
 
@@ -164,77 +181,81 @@ class MyClass:
 
 </div>
 </div>
+
+
+
           </textarea>
-        </section>
-      </div>
+      </section>
     </div>
+  </div>
 
-    <script src="./dist/reveal.js"></script>
+  <script src="./dist/reveal.js"></script>
 
-    <script src="./mermaid/dist/mermaid.min.js"></script>
+  <script src="./mermaid/dist/mermaid.min.js"></script>
 
-    <script src="./plugin/markdown/markdown.js"></script>
-    <script src="./plugin/highlight/highlight.js"></script>
-    <script src="./plugin/zoom/zoom.js"></script>
-    <script src="./plugin/notes/notes.js"></script>
-    <script src="./plugin/math/math.js"></script>
-    <script>
-      function extend() {
-        var target = {};
-        for (var i = 0; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source) {
-            if (source.hasOwnProperty(key)) {
-              target[key] = source[key];
-            }
+  <script src="./plugin/markdown/markdown.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script src="./plugin/zoom/zoom.js"></script>
+  <script src="./plugin/notes/notes.js"></script>
+  <script src="./plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
           }
         }
-        return target;
       }
+      return target;
+    }
 
-      // default options to init reveal.js
-      var defaultOptions = {
-        controls: true,
-        progress: true,
-        history: true,
-        center: true,
-        transition: 'default', // none/fade/slide/convex/concave/zoom
-        slideNumber: true,
-        highlight: {
-          highlightOnLoad: false
-        },
-        plugins: [
-          RevealMarkdown,
-          RevealHighlight,
-          RevealZoom,
-          RevealNotes,
-          RevealMath
-        ]
-      };
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      highlight: {
+        highlightOnLoad: false
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
 
-      // options from URL query string
-      var queryOptions = Reveal().getQueryHash() || {};
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
 
-      var options = extend(defaultOptions, {"transition":"slide","transitionSpeed":"fast","center":false,"slideNumber":"c/t","width":1000,"_":["main.md"],"static":"..","assets-dir":"assets","assetsDir":"assets"}, queryOptions);
-    </script>
+    var options = extend(defaultOptions, { "transition": "slide", "transitionSpeed": "fast", "center": false, "slideNumber": "c/t", "width": 1000, "_": ["main.md"], "static": "..", "assets-dir": "assets", "assetsDir": "assets" }, queryOptions);
+  </script>
 
 
-    <script>
-      Reveal.initialize(options);
-      Reveal.addEventListener('ready', function (event) {
-        const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
-        const hlp = Reveal.getPlugin('highlight');
-        blocks.forEach(hlp.highlightBlock);
-      });
-    </script>
+  <script>
+    Reveal.initialize(options);
+    Reveal.addEventListener('ready', function (event) {
+      const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
+      const hlp = Reveal.getPlugin('highlight');
+      blocks.forEach(hlp.highlightBlock);
+    });
+  </script>
 
-    <script>
-      const mermaidOptions = extend({ startOnLoad: false }, {});
-      mermaid.startOnLoad = false;
-      mermaid.initialize(mermaidOptions);
-      const cb = function (event) { mermaid.init(mermaidOptions, '.stack.present>.present pre code.mermaid'); };
-      Reveal.addEventListener('ready', cb);
-      Reveal.addEventListener('slidetransitionend', cb);
-    </script>
-  </body>
+  <script>
+    const mermaidOptions = extend({ startOnLoad: false }, {});
+    mermaid.startOnLoad = false;
+    mermaid.initialize(mermaidOptions);
+    const cb = function (event) { mermaid.init(mermaidOptions, '.stack.present>.present pre code.mermaid'); };
+    Reveal.addEventListener('ready', cb);
+    Reveal.addEventListener('slidetransitionend', cb);
+  </script>
+</body>
+
 </html>

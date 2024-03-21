@@ -356,23 +356,77 @@ revealOptions:
 <div class="col">
 <div class="fragment" >
 
-$${买活页本，作纸质笔记}$$
+$${买活页本，纸质笔记}$$
 </div>
 <div class="fragment" >
 
-没找着大一当时做的微积分笔记xs
+没找着大一当时做的微积分笔记,xs
 </div>
 
 </div>
 
 <div class="col">
+<div class="fragment" >
 
 $${平板，电子笔记}$$
 </div>
 
-<div class="col">
+<div class="fragment"  style="text-align: center;">
 
-$${买活页本，作纸质笔记}$$
+<img src="images/image-5.png" width="80%">
+</div>
+
+</div>
+
+<div class="col">
+<div class="fragment" >
+
+[$${Markdown，电子笔记}$$](https://note.jiepeng.tech/)
+</div>
+
+<div class="fragment"  style="text-align: center;">
+
+<img src="images/image-6.png" width="80%">
+</div>
+
+</div>
+
+<!-- v -->
+
+## 为什么我选择用 Markdown 做笔记？
+
+<div class="fragment" >
+
+· <font color="DarkBlue">不会丢失</font>：比纸质笔记更加安全
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">简洁</font>：不用考虑排版，专注于内容（而且排版也很好看）
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">方便(1)</font>：有需求从电子书拷贝内容时，直接粘贴即可（然后你可以根据自己的话语重新组织）
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">方便(2)</font>：当你问gpt时，也可以直接把问题和答案复制到你的笔记中进行整理
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">方便(3)</font>：可以直接导出为 pdf，方便打印，传阅。
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">清晰</font>：可以根据自己的需求进行目录的整理，方便查找
+</div>
+<div class="fragment" >
+
+> 当然，适合自己的笔记系统才是最好的。
 </div>
 
 <!-- s -->

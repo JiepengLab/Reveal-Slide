@@ -20,8 +20,8 @@ revealOptions:
 |章节 ||标题 |
 |:--:|:--:|:--:|
 |1|···|自我介绍|
-|8.2.1|···|逻辑回归（Logistic Regression）|
-|8.2.2|···|感知机（Perceptron）|
+|2.1|···|信息收集与生涯规划|
+|2.2|···|学习方式与笔记系统|
 |8.3|···|程序演示|
 </div>
 </div>
@@ -58,8 +58,22 @@ revealOptions:
 
 ## 联系方式
 
-<!-- s -->
+<div class="mul-cols">
+<div class="col">
+ 
+#### 碎碎念
 
+由于这次分享针对的大多是不同专业的同学，所以我能讲的更多的是一些共性的经验。如果想跟我交流更多问题的话，欢迎加我微信
+
+> WECHAT: a1978264748
+
+</div>
+<div class="col" style="text-align: center;">
+
+<img src="images/mmqrcode1711039112694.png" width="60%">
+</div>
+
+<!-- s -->
 
 <div class="middle center">
 <div style="width: 100%">
@@ -101,21 +115,21 @@ revealOptions:
 <div class="mul-cols">
 <div class="col">
 
-<div class="fragment">
+<div class="fragment" style="text-align: center;">
 
-![alt text](images/2d5f9b21dd3b3e478e39de585eaa3bb.jpg)
+<img src="images/2d5f9b21dd3b3e478e39de585eaa3bb.jpg" width="80%">
 </div>
 </div>
 <div class="col">
-<div class="fragment">
+<div class="fragment" style="text-align: center;">
 
-![alt text](images/image-2.png)
+<img src="images/image-2.png" width="80%">
 </div>
 </div>
-<div class="fragment">
+<div class="fragment" style="text-align: center;">
 <div class="col">
 
-![alt text](images/image-1.png)
+<img src="images/image-1.png" width="80%">
 </div>
 </div>
 
@@ -134,6 +148,10 @@ revealOptions:
 <div class="fragment">
 
 · 选拔进入竺可桢学院工程教育高级班
+</div>
+<div class="fragment">
+
+· 2023年 浙江省大学生高等数学竞赛 二等奖
 </div>
 <div class="fragment">
 
@@ -157,46 +175,115 @@ revealOptions:
 </div>
 <div class="fragment">
 
+· 工试 2302 学长组
+</div>
+<div class="fragment">
+
 · 正式转入竺可桢学院混合班
 </div>
 <div class="fragment">
 
-· 选拔进入竺可桢学院工程教育高级班
+· 转入计算机科学与技术专业
 </div>
 <div class="fragment">
 
-· 2022-2023学年 学业优秀标兵
+· 毕马威ESG案例分析大赛(浙江大学赛区)   第一名
 </div>
 <div class="fragment">
 
-· 2022-2023学年 创新创业标兵
+· 第十五届全国大学生数学竞赛浙江赛区初赛    非数A类 一等奖
 </div>
 <div class="fragment">
 
-· 2022-2023学年 优秀学生
+· 选了[43.5学分](https://www.cc98.org/topic/5805806)...
 </div>
-<div class="fragment">
+<div class="fragment"  style="text-align: center;">
 
-· 2022-2023学年 校设奖学金 浙江大学一等奖学金
+<img src="images/image.png" width="80%">
 </div>
 
 <!-- s -->
 
-## 标题
+<div class="middle center">
+<div style="width: 100%">
 
-<div class="three-line">
+# 信息收集与生涯规划
 
-|表头 a|表头 b|表头 c|
-|:--:|:--:|:--:|
-|这是一个|一些内容|...|
-|三线表|...|...|
+<div class="fragment" style="text-align: left;padding-left: 250px">
 
+<font color="DarkBlue">· 学长，我要转专业</font>
+</div>
+<div class="fragment" style="text-align: left;padding-left: 250px">
+
+· 你了解另一个专业吗？
 </div>
 
-|表头 a|表头 b|表头 c|
-|:--:|:--:|:--:|
-|这是一个|一些内容|...|
-|普通表格|...|...|
+<div class="fragment" style="text-align: left;padding-left: 250px">
+
+· <font color="DarkBlue">不了解...</font>
+</div>
+
+
+<div class="fragment"  style="text-align: center;">
+
+> 没有<font color="DarkRed">信息收集</font>，何谈<font color="DarkBlue">生涯规划</font><font color="DarkRed">？</font><font color="DarkRed">！</font>
+</div>
+
+</div>
+</div>
+
+<!-- v -->
+
+## 信息收集与生涯规划
+
+<div class="fragment" >
+
+· <font color="DarkBlue">专业确定</font>：本专业与目标专业的实际情况（找该专业前辈聊），转专业细则（课程修读要求......）
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">推免/跨保</font>：本专业政策（加分项、课程占比...）、流程（夏令营、九推、联系导师、预推免...）
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">考研/跨考</font>：考研科目、流程...
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">出国留学</font>：语言要求（托福/雅思/GRE）、暑研、套磁...
+</div>
+<div class="fragment" >
+
+· <font color="DarkBlue">本科就业</font>：企业有什么岗位，面经...
+</div>
+
+<div class="fragment" >
+
+· <font color="DarkBlue">...</font>
+</div>
+
+
+<div class="fragment"  style="text-align: left;">
+
+> 当然，随着自己的成长，每个选择的意向程度都会有所改变。但是，请<font color="DarkRed">务必抽一些时间对心选的方向做出了解，不要为抽象的概念而努力</font>
+</div>
+
+<!-- v -->
+
+## 如何获取这些信息呢？
+
+普遍有效：问学长学姐、[CC98](https://www.cc98.org/)，善用搜索（Bing...）
+
+在<font color="DarkRed">专业了解</font>上，可以写邮件问各院系的老师（不必害怕，老师们都很热情的！）
+
+对于<font color="DarkRed">推免</font>：最好先拿到本年度的保研政策（在各学院院网上，但公示期后会删除，可以去找本专业学长们要）
+
+<font color="DarkRed">留学</font>：强推各学院的[飞跃手册](https://www.cc98.org/topic/4859952)，其中有关于前辈们留学的考虑、如何准备留学的办法等等
+
+除此之外，相信你在自行搜索后，肯定能收获更多。
 
 <!-- s -->
 

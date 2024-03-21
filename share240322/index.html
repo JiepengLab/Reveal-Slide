@@ -1,26 +1,24 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Slide 模板</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/github.css" />
 
-  <title>Slide 模板</title>
-  <link rel="shortcut icon" href="./favicon.ico" />
-  <link rel="stylesheet" href="./dist/reset.css" />
-  <link rel="stylesheet" href="./dist/reveal.css" />
-  <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
-  <link rel="stylesheet" href="./css/highlight/github.css" />
-
-  <link rel="stylesheet" href="./assets/custom.css" />
-</head>
-
-<body>
-  <div class="reveal">
-    <div class="slides">
-      <section data-markdown data-separator="<!-- s -->" data-separator-vertical="<!-- v -->">
-        <textarea data-template>
-
+    <link rel="stylesheet" href="./assets/custom.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator="<!-- s -->" data-separator-vertical="<!-- v -->">
+          <textarea data-template>
+            
 
 ## 经验分享
 <div class="fragment">
@@ -37,7 +35,7 @@
 
 网站地址 [slide.jiepeng.tech/share240322](https://slide.jiepeng.tech/share240322)
 
-分享人：金杰鹏  
+分享人：金杰鹏，[联系方式](./0/2)
 
 <div class="fragment">
 
@@ -63,6 +61,10 @@
 
 基本的点击操作是一样的。<font color="DarkRed">带有方向的滑动</font>可以对应方向键功能。
 
+<!-- v -->
+
+## 联系方式
+
 <!-- s -->
 
 
@@ -78,10 +80,9 @@
 
 ## 关于我
 
--
 <div class="fragment">
 
-· 金杰鹏
+金杰鹏，大二在读，累积10余门课满绩，29门课4.5及以上
 </div>
 <div class="fragment">
 
@@ -89,11 +90,104 @@
 </div>
 <div class="fragment">
 
-· 大一上 31 学分，均绩 4.73/5.0
+<font color="DarkBlue">大一上</font>
+</div>
+<div class="fragment">
+
+· 31 学分，均绩 4.73/5.0，工试大类 2/713
+</div>
+<div class="fragment">
+
+· 2022 “创客启程” 大赛 第二名
+</div>
+<div class="fragment">
+
+· 至美公益 线上支教
 </div>
 
+<div class="mul-cols">
+<div class="col">
+
+<div class="fragment">
+
+![alt text](images/2d5f9b21dd3b3e478e39de585eaa3bb.jpg)
+</div>
+</div>
+<div class="col">
+<div class="fragment">
+
+![alt text](images/image-2.png)
+</div>
+</div>
+<div class="fragment">
+<div class="col">
+
+![alt text](images/image-1.png)
+</div>
+</div>
+
+</div>
 
 <!-- v -->
+
+## 关于我
+
+<font color="DarkBlue">大一下</font> 
+</div>
+<div class="fragment">
+
+· 选拔预转入竺可桢学院混合班
+</div>
+<div class="fragment">
+
+· 选拔进入竺可桢学院工程教育高级班
+</div>
+<div class="fragment">
+
+· 2022-2023学年 学业优秀标兵
+</div>
+<div class="fragment">
+
+· 2022-2023学年 创新创业标兵
+</div>
+<div class="fragment">
+
+· 2022-2023学年 优秀学生
+</div>
+<div class="fragment">
+
+· 2022-2023学年 校设奖学金 浙江大学一等奖学金
+</div>
+<!-- v -->
+
+<font color="DarkBlue">大二上</font> 
+</div>
+<div class="fragment">
+
+· 正式转入竺可桢学院混合班
+</div>
+<div class="fragment">
+
+· 选拔进入竺可桢学院工程教育高级班
+</div>
+<div class="fragment">
+
+· 2022-2023学年 学业优秀标兵
+</div>
+<div class="fragment">
+
+· 2022-2023学年 创新创业标兵
+</div>
+<div class="fragment">
+
+· 2022-2023学年 优秀学生
+</div>
+<div class="fragment">
+
+· 2022-2023学年 校设奖学金 浙江大学一等奖学金
+</div>
+
+<!-- s -->
 
 ## 标题
 
@@ -185,77 +279,76 @@ class MyClass:
 
 
           </textarea>
-      </section>
+        </section>
+      </div>
     </div>
-  </div>
 
-  <script src="./dist/reveal.js"></script>
+    <script src="./dist/reveal.js"></script>
 
-  <script src="./mermaid/dist/mermaid.min.js"></script>
+    <script src="./mermaid/dist/mermaid.min.js"></script>
 
-  <script src="./plugin/markdown/markdown.js"></script>
-  <script src="./plugin/highlight/highlight.js"></script>
-  <script src="./plugin/zoom/zoom.js"></script>
-  <script src="./plugin/notes/notes.js"></script>
-  <script src="./plugin/math/math.js"></script>
-  <script>
-    function extend() {
-      var target = {};
-      for (var i = 0; i < arguments.length; i++) {
-        var source = arguments[i];
-        for (var key in source) {
-          if (source.hasOwnProperty(key)) {
-            target[key] = source[key];
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
           }
         }
+        return target;
       }
-      return target;
-    }
 
-    // default options to init reveal.js
-    var defaultOptions = {
-      controls: true,
-      progress: true,
-      history: true,
-      center: true,
-      transition: 'default', // none/fade/slide/convex/concave/zoom
-      slideNumber: true,
-      highlight: {
-        highlightOnLoad: false
-      },
-      plugins: [
-        RevealMarkdown,
-        RevealHighlight,
-        RevealZoom,
-        RevealNotes,
-        RevealMath
-      ]
-    };
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        highlight: {
+          highlightOnLoad: false
+        },
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
 
-    // options from URL query string
-    var queryOptions = Reveal().getQueryHash() || {};
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
 
-    var options = extend(defaultOptions, { "transition": "slide", "transitionSpeed": "fast", "center": false, "slideNumber": "c/t", "width": 1000, "_": ["main.md"], "static": "..", "assets-dir": "assets", "assetsDir": "assets" }, queryOptions);
-  </script>
+      var options = extend(defaultOptions, {"transition":"slide","transitionSpeed":"fast","center":false,"slideNumber":"c/t","width":1000,"_":["main.md"],"static":"..","assets-dir":"assets","assetsDir":"assets"}, queryOptions);
+    </script>
 
 
-  <script>
-    Reveal.initialize(options);
-    Reveal.addEventListener('ready', function (event) {
-      const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
-      const hlp = Reveal.getPlugin('highlight');
-      blocks.forEach(hlp.highlightBlock);
-    });
-  </script>
+    <script>
+      Reveal.initialize(options);
+      Reveal.addEventListener('ready', function (event) {
+        const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
+        const hlp = Reveal.getPlugin('highlight');
+        blocks.forEach(hlp.highlightBlock);
+      });
+    </script>
 
-  <script>
-    const mermaidOptions = extend({ startOnLoad: false }, {});
-    mermaid.startOnLoad = false;
-    mermaid.initialize(mermaidOptions);
-    const cb = function (event) { mermaid.init(mermaidOptions, '.stack.present>.present pre code.mermaid'); };
-    Reveal.addEventListener('ready', cb);
-    Reveal.addEventListener('slidetransitionend', cb);
-  </script>
-</body>
-
+    <script>
+      const mermaidOptions = extend({ startOnLoad: false }, {});
+      mermaid.startOnLoad = false;
+      mermaid.initialize(mermaidOptions);
+      const cb = function (event) { mermaid.init(mermaidOptions, '.stack.present>.present pre code.mermaid'); };
+      Reveal.addEventListener('ready', cb);
+      Reveal.addEventListener('slidetransitionend', cb);
+    </script>
+  </body>
 </html>

@@ -22,7 +22,7 @@ revealOptions:
 |1|···|自我介绍|
 |2.1|···|信息收集与生涯规划|
 |2.2|···|学习方式与笔记系统|
-|8.3|···|程序演示|
+|3|···|提问与总结|
 </div>
 </div>
 
@@ -89,7 +89,7 @@ revealOptions:
 
 <div class="fragment">
 
-金杰鹏，大二在读，累积10余门课满绩，29门课4.5及以上
+金杰鹏，大二在读，累积10余门满绩，29门4.5及以上
 </div>
 <div class="fragment">
 
@@ -302,70 +302,85 @@ revealOptions:
 <div class="middle center">
 <div style="width: 100%">
 
-# Part.2 布局
+# 学习方式与笔记系统
 
 </div>
 </div>
 
 <!-- v -->
 
-## 多列布局
+## 学习方式
+
+
+<div class="fragment"  style="text-align: center;">
+
+<iframe src="//player.bilibili.com/player.html?aid=934978627&bvid=BV1XM4y1c7Jp&cid=464171873&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+</div>
+
+<div class="fragment">
+
+大家可能已经经历过[【考试周破防】](https://www.bilibili.com/video/BV1XM4y1c7Jp)了x，大学的学习和高中还是完全不一样的。
+</div>
+
+<div class="fragment" >
+
+最应做的是，从 [CC98](https://www.cc98.org/)、朵朵上找到前辈们的经验及其笔记。我们与前辈同为学者，这之间知识的传承是最可贵的。
+</div>
+
+<!-- v -->
+
+## 学习方式
+
+<div class="fragment" >
+
+做好代做事项的备忘录。毕竟大学提交作业的时间往往都较久，期间会有各种各样的事情，很容易忘掉DDL...
+</div>
+
+<div class="fragment"  style="text-align: center;">
+
+<img src="images/image-3.png" width="80%">
+</div>
+
+<div class="fragment" >
+
+在“芜杂”的课程中，做出一份<font color="DarkRed">好的笔记</font>供自己复习整理是很必要的。
+</div>
+
+<!-- v -->
+
+## 笔记系统
+
+本人在高中基本不做笔记，在大学越学越觉笔记的重要性。在大学中，笔记体系发生如下变化：
 
 <div class="mul-cols">
 <div class="col">
+<div class="fragment" >
 
-第一列
+$${买活页本，作纸质笔记}$$
+</div>
+<div class="fragment" >
 
-- list
-- list
+没找着大一当时做的微积分笔记xs
+</div>
 
 </div>
+
 <div class="col">
 
-第二列
-
-```python
-class MyClass:
-    def __init__(self, ...):
-        ...
-    def method(self, ...):
-        ...
-```
-
-</div>
+$${平板，电子笔记}$$
 </div>
 
-<div class="mul-cols">
 <div class="col">
 
-第一列
-
-- list
-- list
-
+$${买活页本，作纸质笔记}$$
 </div>
-<div class="col">
 
-第二列
+<!-- s -->
 
-1. list 
-2. list 
-    - list
+<div class="middle center">
+<div style="width: 100%">
 
-</div>
-<div class="col">
-
-第三列
-
-```python
-class MyClass:
-    def __init__(self, ...):
-        ...
-    def method(self, ...):
-        ...
-```
+# 提问与总结
 
 </div>
 </div>
-
-

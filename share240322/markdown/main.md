@@ -13,17 +13,25 @@ revealOptions:
     width: 1000
 ---
 
-<div class="middle center">
-<div style="width: 100%">
+## 经验分享
+<div class="fragment">
 
-# 经验分享
-
+|章节 ||标题 |
+|:--:|:--:|:--:|
+|8.1|...|神经网络与数学模型|
+|8.2.1|...|逻辑回归（Logistic Regression）|
+|8.2.2|...|感知机（Perceptron）|
+|8.3|...|程序演示|
 <hr/>
-
-By1 [@TonyCrane](https://github.com/TonyCrane)
-
 </div>
-</div>
+
+网站地址 [slide.jiepeng.tech/share240322](https://slide.jiepeng.tech/share240322)
+
+分享人：金杰鹏  
+
+怎么使用这个PPT? 按<kbd>🡇</kbd>方向键查看说明
+
+<!-- v -->
 
 <!-- s -->
 

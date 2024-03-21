@@ -9,33 +9,39 @@
     <link rel="stylesheet" href="./dist/reset.css" />
     <link rel="stylesheet" href="./dist/reveal.css" />
     <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
-    <link rel="stylesheet" href="./css/highlight/monokai-sublime.css" />
+    <link rel="stylesheet" href="./css/highlight/github.css" />
 
-    <link rel="stylesheet" href="./_assets/custom.css" />
-    <link rel="stylesheet" href="./_assets/dark.css" />
+    <link rel="stylesheet" href="./assets/custom.css" />
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
-        <section data-markdown data-separator="<!--s-->" data-separator-vertical="<!--v-->">
+        <section data-markdown data-separator="<!-- s -->" data-separator-vertical="<!-- v -->">
           <textarea data-template>
             
 
-<div class="middle center">
-<div style="width: 100%">
+## 经验分享
+<div class="fragment">
 
-# Slide 模版
-
+|章节 ||标题 |
+|:--:|:--:|:--:|
+|8.1|...|神经网络与数学模型|
+|8.2.1|...|逻辑回归（Logistic Regression）|
+|8.2.2|...|感知机（Perceptron）|
+|8.3|...|程序演示|
 <hr/>
-
-By [@TonyCrane](https://github.com/TonyCrane)
-
-
-
-</div>
 </div>
 
-<!--s-->
+网站地址 [slide.jiepeng.tech/share240322](https://slide.jiepeng.tech/share240322)
+
+分享人：金杰鹏  
+
+怎么使用这个PPT? 按<kbd>🡇</kbd>方向键查看说明
+
+<!-- v -->
+
+<!-- s -->
+
 
 <div class="middle center">
 <div style="width: 100%">
@@ -48,7 +54,7 @@ By [@TonyCrane](https://github.com/TonyCrane)
 </div>
 
 
-<!--v-->
+<!-- v -->
 
 ## 标题
 
@@ -70,7 +76,7 @@ fn main() {
 
 1. 有序
 
-<!--v-->
+<!-- v -->
 
 ## 标题
 
@@ -88,7 +94,7 @@ fn main() {
 |这是一个|一些内容|...|
 |普通表格|...|...|
 
-<!--s-->
+<!-- s -->
 
 <div class="middle center">
 <div style="width: 100%">
@@ -98,7 +104,7 @@ fn main() {
 </div>
 </div>
 
-<!--v-->
+<!-- v -->
 
 ## 多列布局
 
@@ -209,7 +215,7 @@ class MyClass:
       // options from URL query string
       var queryOptions = Reveal().getQueryHash() || {};
 
-      var options = extend(defaultOptions, {"transition":"slide","transitionSpeed":"fast","center":false,"slideNumber":"c/t","width":1000,"_":["main.dark.md"],"static":"..\\site\\"}, queryOptions);
+      var options = extend(defaultOptions, {"transition":"slide","transitionSpeed":"fast","center":false,"slideNumber":"c/t","width":1000,"_":["main.md"],"static":"..","assets-dir":"assets","assetsDir":"assets"}, queryOptions);
     </script>
 
 

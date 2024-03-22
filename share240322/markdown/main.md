@@ -347,8 +347,6 @@ revealOptions:
 </div>
 </div>
 
-<!-- v -->
-
 <!-- s -->
 
 <div class="middle center">
@@ -359,7 +357,7 @@ revealOptions:
 
 <div class="fragment" style="text-align: left">
 
-> 每个人都有适合自己的一套学习方式与笔记系统，以下仅提供适合我的，可供参考
+> 每个人都有适合自己的一套学习方式与笔记系统，以下提供适合我的，仅供参考
 
 </div>
 
@@ -383,7 +381,7 @@ revealOptions:
 
 <div class="fragment" >
 
-最应做的是，应该是提高自己的学习效率。找到最适合自己的学习方法。
+<font size="5">最应做的是，应该是提高自己的学习效率。找到最适合自己的学习方法。</font>
 </div>
 <div class="fragment" style="text-align: center;">
 

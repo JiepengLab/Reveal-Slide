@@ -498,6 +498,18 @@ Markdown 是个非常简单的语言，看[官方教程](https://markdown.com.cn
 
 <!-- v -->
 
+## 笔记系统 Appendix
+
+如何构建类似 [JiepengLab](https://note.jiepeng.tech/) 的网站？
+
+<div class="fragment">
+
+网站采用 [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) + Github Page 部署，喜欢折腾的可以去了解一下。
+</div>
+
+<div class="fragment" style="text-align: center;" >
+<a href="https://squidfunk.github.io/mkdocs-material/"><img src="images/image-10.png" width="80%"></a>
+</div>
 
 
 <!-- s -->

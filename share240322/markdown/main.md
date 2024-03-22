@@ -353,7 +353,7 @@ revealOptions:
 
 <div class="fragment"  style="text-align: center;">
 
-<iframe src="//player.bilibili.com/player.html?aid=934978627&bvid=BV1XM4y1c7Jp&cid=464171873&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"  autoplay="false"> </iframe>
+<iframe src="//player.bilibili.com/player.html?aid=934978627&bvid=BV1XM4y1c7Jp&cid=464171873&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"  autoplay="false"> </iframe>
 </div>
 
 <div class="fragment">

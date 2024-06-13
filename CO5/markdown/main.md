@@ -24,6 +24,8 @@ Computer Organization(Spring 2024)
 
 By [金杰鹏](https://github.com/JiepengLab)
 
+[https://slide.jiepeng.tech/CO5](https://slide.jiepeng.tech/CO5)
+
 </div>
 </div>
 
@@ -293,6 +295,12 @@ would the designer increase the data size of the cache?
 
 <div class="fragment">
 
+In Solution, 用了page offset的13位作比较。觉得它是想把index写到page offset里面？
+</div>
+
+
+<div class="fragment">
+
 所以我们要想办法把这个索引的数目减下来。设计师可以通过增加缓存的关联性来增加缓存的数据大小。这将减少索引位数，使得缓存的索引能够完全包含在页面索引内。
 </div>
 <!-- s -->
@@ -300,7 +308,7 @@ would the designer increase the data size of the cache?
 <div class="middle center">
 <div style="width: 100%">
 
-# 5.20
+# 5.20 Replacement Policies 那些事
 
 </div>
 </div>

@@ -2,12 +2,11 @@
 
 live:
 	@echo "Previewing main slides..."
-	-@reveal-md main.md -w --scripts https://cdn.tonycrane.cc/heti/heti.js,heti_worker.js --template template.html || true
+	-@reveal-md main.md
 
 build:
 	@echo "Building main slides..."
-	@reveal-md main.md --scripts https://cdn.tonycrane.cc/heti/heti.js,heti_worker.js --template template.html --static ../site --assets-dir assets
-	@rm ../site/main.html
+	@reveal-md main.md --static ..
 
 clean:
 	@echo "Cleaning up..."

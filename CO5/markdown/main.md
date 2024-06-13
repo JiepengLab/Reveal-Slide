@@ -317,4 +317,3 @@ reference whether or not you want the requested address to be cached. What effec
 could this have on miss rate?
 
 如果我们知道某个地址的时间局部性有限，并且会与缓存中的另一个块发生冲突，选择不缓存它可能会提高缓存的未命中率。另一方面，如果选择不当，决定哪些地址要缓存，可能会降低缓存的未命中率。
-

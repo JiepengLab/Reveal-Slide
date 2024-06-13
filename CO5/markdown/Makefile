@@ -6,7 +6,7 @@ live:
 
 build:
 	@echo "Building main slides..."
-	@reveal-md main.md --static ..
+	@reveal-md main.md --static .. --assets-dir assets
 
 clean:
 	@echo "Cleaning up..."

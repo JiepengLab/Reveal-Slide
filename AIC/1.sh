@@ -1,1 +1,1 @@
-    reveal-md main.md --static .. --assets-dir assets 
+reveal-md main.md --static .. --assets-dir assets 

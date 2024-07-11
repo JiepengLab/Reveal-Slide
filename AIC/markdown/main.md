@@ -1,5 +1,5 @@
 ---
-title: Slide 模板
+title: 金融科技导论与实践——2024 Summer
 separator: <!-- s -->
 verticalSeparator: <!-- v -->
 theme: simple

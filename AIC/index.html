@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Slide 模板</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/github.css" />
+
+    <link rel="stylesheet" href="./assets/custom.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator="<!-- s -->" data-separator-vertical="<!-- v -->">
+          <textarea data-template>
+            
+
+<div class="middle center">
+<div style="width: 100%">
+
+# 知识图谱与大模型
+
+金融科技导论与实践——2024 Summer
+
+<hr/>
+
+By [金杰鹏](https://github.com/JiepengLab)
+
+</div>
+</div>
+
+<!-- v -->
+## 实验目的
+
+围绕知识图谱或大模型实现金融领域的相关应用，例如基于大模型的金融知识图谱自动化生成、基于图神经网络的客户群体分类等等。
+
+<div class="fragment">
+<div style="text-align: center;">
+    <img src="images/image-4.png" alt="图片描述" width="50%">
+</div>
+</div>
+
+
+<!-- s -->
+
+<div class="middle center">
+<div style="width: 100%">
+方向一
+
+# 基于大模型的金融知识图谱自动化生成
+
+</div>
+</div>
+
+<!-- v -->
+
+## 任务描述
+<div class="fragment">
+
+通过大模型技术，自动化生成针对特定金融领域的知识图谱。我们需要从金融文本中抽取实体和关系，基于大模型实现知识图谱的构建，并且将知识图谱存储在Neo4j数据库中。
+</div>
+
+---
+<div class="fragment">
+
+## 思路
+
+采用大模型框架 [GPT4IE](https://github.com/cocacola-lab/GPT4IE)，通过预训练的大模型，实现金融文本的实体和关系抽取。然后将抽取的实体和关系存储在Neo4j数据库中，构建金融知识图谱。
+
+<div class="fragment">
+
+[演示](http://localhost:3000/)
+</div>
+
+</div>
+
+<!-- v -->
+
+## 思路
+
+<div class="fragment">
+
+由于[GPT4IE](https://github.com/cocacola-lab/GPT4IE)这个框架也比较老了，其内部采用的是 **Completions API** (i.e., the GPT-3 API)。
+
+它与最新的  **Chat Completions API** (i.e., the GPT-3.5 API) 不兼容。
+</div>
+<div class="fragment">
+
+- Completions API：必需参数为 model 和 prompt
+- Chat Completions API：必需参数为 model 和 messages
+</div>
+<div class="fragment">
+
+所以我们在使用时需要注意这个问题，将参数传递正确。
+</div>
+
+<!-- v -->
+
+## 思路
+
+<div class="fragment">
+
+之后计划将这个框架进行升级，使其能够读取所有的数据集，并自动化生成知识图谱。然后将生成的知识图谱存储在Neo4j数据库中，实现金融知识图谱的自动化生成。
+</div>
+
+<!-- s -->
+
+<div class="middle center">
+<div style="width: 100%">
+方向二
+
+# 基于图学习的客群分类任务
+
+</div>
+</div>
+
+<!-- v -->
+
+## 任务描述
+
+基于图学习的客群分类任务主要考察搭建客群挖掘算法的能力，我将基于图神经网络算法预测图上每个节点的所属的客群标签。
+
+实验采用的数据集为 [CiteSeer](https://github.com/kimiyoung/planetoid)。
+
+| 节点数量 | 边数量 | 特征数量 | 客群标签数量 |
+| :----: | :----: | :----: | :----: |
+| 3327 | 9104 | 3703 | 6 |
+
+<!-- v -->
+
+## 数据集
+
+实验文档提供的数据集中，关于CiteSeer的部分有：
+<div class="fragment">
+
+```shell
+1. ind.citeseer.allx        # the feature vectors of both labeled and unlabeled training instances (a superset of x)
+2. ind.citeseer.ally        # the labels for instances in allx
+3. ind.citeseer.graph       # a dict in the format {index: [index_of_neighbor_nodes]}
+4. ind.citeseer.test.index  # the indices of test instances in graph, for the inductive setting
+5. ind.citeseer.tx          # the feature vectors of the test instances
+6. ind.citeseer.ty          # the one-hot labels of the test instances
+7. ind.citeseer.x           # the feature vectors of the labeled training instances
+8. ind.citeseer.y           # the one-hot labels of the labeled training instances
+```
+
+</div>
+
+<div class="fragment">
+
+可以使用`cPickle.load(open(filename))`  来加载numpy/scipy对象`x`, `y`, `tx`, `ty`, `allx`, `ally`, 和 `graph`。
+</div>
+<!-- v -->
+
+## 思路
+
+<div class="fragment">
+
+我将采用[图聚合卷积（GraphSAGE）算法](https://github.com/williamleif/GraphSAGE)，GraphSAGE是一种采样和聚合的图卷积算法，通过采样节点的邻居子图并聚合邻居节点的特征，以迭代方式更新节点表示，从而在保留图结构的同时有效地学习节点的低维度表示，适用于节点表示学习和图分类任务。
+</div><div class="fragment">
+<div style="text-align: center;">
+    <img src="images/image-5.png" alt="图片描述" width="80%">
+</div>
+</div>
+<!-- v -->
+
+
+## GraphSAGE 输入格式
+
+<div class="fragment">
+
+```shell
+<train_prefix>-G.json -- A networkx-specified json file describing the input graph. Nodes have 'val' and 'test' attributes specifying if they are a part of the validation and test sets, respectively.
+<train_prefix>-id_map.json -- A json-stored dictionary mapping the graph node ids to consecutive integers.
+<train_prefix>-class_map.json -- A json-stored dictionary mapping the graph node ids to classes.
+<train_prefix>-feats.npy [optional] --- A numpy-stored array of node features; ordering given by id_map.json. Can be omitted and only identity features will be used.
+<train_prefix>-walks.txt [optional] --- A text file specifying random walk co-occurrences (one pair per line) (*only for unsupervised version of graphsage)
+```
+</div>
+
+<div class="fragment">
+
+因为我们最好是进行无监督的训练，所以我们需要制作G.json、id_map.json、class_map.json、walks.txt这几个文件。
+</div>
+<!-- v -->
+
+## 思路
+
+<div class="fragment">
+
+由于 GraphSAGE 有很多型号变体
+</div>
+
+<div class="fragment">
+
+```shell
+graphsage_mean      -- GraphSage with mean-based aggregator
+graphsage_seq       -- GraphSage with LSTM-based aggregator
+graphsage_maxpool   -- GraphSage with max-pooling aggregator (as described in the NIPS 2017 paper)
+graphsage_meanpool  -- GraphSage with mean-pooling aggregator (a variant of the pooling aggregator, where the element-wie mean replaces the element-wise max).
+gcn             -- GraphSage with GCN-based aggregator
+n2v             -- an implementation of DeepWalk (called n2v for short in the code.)
+```
+</div>
+
+<div class="fragment">
+
+我将逐一尝试这些模型，进行客群分类任务，看看哪个模型效果最好。
+</div>
+<!-- v -->
+
+## GraphSAGE demo
+
+<div class="fragment">
+
+<div style="text-align: center;">
+    <img src="images/image-6.png" alt="图片描述" width="100%">
+</div>
+
+</div>
+
+<!-- s -->
+
+<div class="middle center">
+<div style="width: 100%">
+
+# 谢谢！
+
+</div>
+</div>
+          </textarea>
+        </section>
+      </div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./mermaid/dist/mermaid.min.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        highlight: {
+          highlightOnLoad: false
+        },
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"slide","transitionSpeed":"fast","center":false,"slideNumber":"c/t","width":1000,"_":["main.md"],"static":"..","assets-dir":"assets","assetsDir":"assets"}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+      Reveal.addEventListener('ready', function (event) {
+        const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
+        const hlp = Reveal.getPlugin('highlight');
+        blocks.forEach(hlp.highlightBlock);
+      });
+    </script>
+
+    <script>
+      const mermaidOptions = extend({ startOnLoad: false }, {});
+      mermaid.startOnLoad = false;
+      mermaid.initialize(mermaidOptions);
+      const cb = function (event) { mermaid.init(mermaidOptions, '.stack.present>.present pre code.mermaid'); };
+      Reveal.addEventListener('ready', cb);
+      Reveal.addEventListener('slidetransitionend', cb);
+    </script>
+  </body>
+</html>

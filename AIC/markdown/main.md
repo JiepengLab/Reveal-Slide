@@ -24,6 +24,8 @@ revealOptions:
 
 By [金杰鹏](https://github.com/JiepengLab)
 
+[https://slide.jiepeng.tech/AIC](https://slide.jiepeng.tech/AIC)
+
 </div>
 </div>
 
@@ -61,16 +63,26 @@ By [金杰鹏](https://github.com/JiepengLab)
 ---
 <div class="fragment">
 
+## 当前研究现状
+目前，已经有多种**知识大语言模型**可以进行**实体和关系抽取**，例如：智析、OneKE和GPT4IE等。这些方法可以通过预训练的大模型，实现金融文本的实体和关系抽取。
+<!-- v -->
+</div>
+
 ## 思路
 
 采用大模型框架 [GPT4IE](https://github.com/cocacola-lab/GPT4IE)，通过预训练的大模型，实现金融文本的实体和关系抽取。然后将抽取的实体和关系存储在Neo4j数据库中，构建金融知识图谱。
-
+</div>
 <div class="fragment">
 
 [演示](http://localhost:3000/)
 </div>
 
+<div class="fragment">
+<div style="text-align: center;">
+    <img src="images/image-4.png" alt="图片描述" width="50%">
 </div>
+</div>
+
 
 <!-- v -->
 
@@ -115,14 +127,23 @@ By [金杰鹏](https://github.com/JiepengLab)
 <!-- v -->
 
 ## 任务描述
+<div class="fragment">
+
+客群分类任务是数据分析和机器学习中的一种常见任务，旨在根据客户的行为、特征或偏好，将客户划分为不同的组或类别，以便企业能够更有针对性地进行市场营销、产品推荐和服务优化。
+</div>
+<div class="fragment">
 
 基于图学习的客群分类任务主要考察搭建客群挖掘算法的能力，我将基于图神经网络算法预测图上每个节点的所属的客群标签。
+</div>
+<div class="fragment">
 
 实验采用的数据集为 [CiteSeer](https://github.com/kimiyoung/planetoid)。
 
 | 节点数量 | 边数量 | 特征数量 | 客群标签数量 |
 | :----: | :----: | :----: | :----: |
 | 3327 | 9104 | 3703 | 6 |
+
+</div>
 
 <!-- v -->
 
@@ -132,14 +153,14 @@ By [金杰鹏](https://github.com/JiepengLab)
 <div class="fragment">
 
 ```shell
-1. ind.citeseer.allx        # the feature vectors of both labeled and unlabeled training instances (a superset of x)
-2. ind.citeseer.ally        # the labels for instances in allx
-3. ind.citeseer.graph       # a dict in the format {index: [index_of_neighbor_nodes]}
-4. ind.citeseer.test.index  # the indices of test instances in graph, for the inductive setting
-5. ind.citeseer.tx          # the feature vectors of the test instances
-6. ind.citeseer.ty          # the one-hot labels of the test instances
-7. ind.citeseer.x           # the feature vectors of the labeled training instances
-8. ind.citeseer.y           # the one-hot labels of the labeled training instances
+1. ind.citeseer.allx        # 标记和未标记训练实例的特征向量（x的超集）
+2. ind.citeseer.ally        # allx中实例的标签
+3. ind.citeseer.graph       # 一个格式为 {index: [邻居节点的索引]} 的字典
+4. ind.citeseer.test.index  # 图中测试实例的索引，用于归纳设置
+5. ind.citeseer.tx          # 测试实例的特征向量
+6. ind.citeseer.ty          # 测试实例的独热标签
+7. ind.citeseer.x           # 标记训练实例的特征向量
+8. ind.citeseer.y           # 标记训练实例的独热标签
 ```
 
 </div>
@@ -192,12 +213,12 @@ By [金杰鹏](https://github.com/JiepengLab)
 <div class="fragment">
 
 ```shell
-graphsage_mean      -- GraphSage with mean-based aggregator
-graphsage_seq       -- GraphSage with LSTM-based aggregator
-graphsage_maxpool   -- GraphSage with max-pooling aggregator (as described in the NIPS 2017 paper)
-graphsage_meanpool  -- GraphSage with mean-pooling aggregator (a variant of the pooling aggregator, where the element-wie mean replaces the element-wise max).
-gcn             -- GraphSage with GCN-based aggregator
-n2v             -- an implementation of DeepWalk (called n2v for short in the code.)
+1. graphsage_mean      -- 基于均值聚合器的GraphSage
+2. graphsage_seq       -- 基于LSTM聚合器的GraphSage
+3. graphsage_maxpool   -- 基于最大池化聚合器的GraphSage（如NIPS 2017论文中所述）
+4. graphsage_meanpool  -- 基于均值池化聚合器的GraphSage（池化聚合器的变体，其中元素均值替换了元素最大值）
+5. gcn                 -- 基于GCN聚合器的GraphSage
+6. n2v                 -- DeepWalk的实现（代码中简称为n2v）
 ```
 </div>
 
@@ -216,13 +237,28 @@ n2v             -- an implementation of DeepWalk (called n2v for short in the co
 </div>
 
 </div>
+<!-- v -->
+
+## 当前研究现状
+
+<div class="fragment">
+<div style="text-align: center;">
+    <img src="images/image-1.png" alt="图片描述" width="40%">
+</div>
+
+在 Google Scholar 中搜索 [+ segmentation + marketing] 时的大致搜索结果如上。
+</div>
+<div class="fragment">
+
+- DeepLimeSeg(Mathematics 2023)将深度学习方法与基于 Lime 的可解释性相结合，以有效地细分客户。
+</div>
 
 <!-- s -->
 
 <div class="middle center">
 <div style="width: 100%">
 
-# 谢谢！
+# 谢谢！恳请老师批评指正
 
 </div>
 </div>

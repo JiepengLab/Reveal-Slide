@@ -495,8 +495,3 @@ could this have on miss rate?
 </div>
 
 <!-- v -->
-
-第一章 
-
-1. CPI
-2. 

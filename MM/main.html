@@ -182,6 +182,8 @@ $$ \text{QuantizedCoefficient}(u, v) = \text{round} \left( \frac{\text{DCTCoeffi
 
 </div>
 
+<div class="fragment">
+
 $$
 S =
 \begin{cases}
@@ -193,6 +195,7 @@ $$
 $$
 Q_{\text{lum}}(u, v) = \text{clip} \left( \left\lfloor Q_{\text{lum\_std}}(u, v) \times \frac{S}{100} + 0.5 \right\rfloor, \ 1, \ 255 \right)
 $$
+</div>
 
 <!-- v -->
 
@@ -282,14 +285,10 @@ Zigzag 扫描后 (部分):
 $$ \text{Difference} _i = \text{DC} _i - \text{DC} _{i-1} $$
 <!-- v -->
 
-<div class="fragment">
-
 * **编码:** 对计算出的差值 `Difference` 进行编码。
     * 首先，确定表示这个差值需要的 **位数类别（SIZE）**。
     * 然后，根据差值的正负和 SIZE，计算一个**幅值（Amplitude）** 位序列。
     * 最终，对 `SIZE` 进行熵编码 (如 Huffman)，并将 `Amplitude` 位直接附加在后面。
-
-</div>
 
 <div class="fragment">
 

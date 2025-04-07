@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>JPEG 图像压缩流程与实现</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/github.css" />
+
+    <link rel="stylesheet" href="./assets/custom.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator="<!-- s -->" data-separator-vertical="<!-- v -->">
+          <textarea data-template>
+            
+
+<div class="middle center">
+<div style="width: 100%">
+
+# JPEG 图像压缩流程与实现
+
+简化 JPEG 编码器演示
+
+<hr/>
+
+主讲人: 金杰鹏
+
+日期: 2025.04.08
+
+</div>
+</div>
+
+<!-- s -->
+
+## JPEG 压缩流程概览
+
+<div class="fragment">
+
+JPEG (Joint Photographic Experts Group) 是一种广泛使用的**有损**图像压缩标准。
+
+</div>
+<div class="fragment">
+
+核心思想是利用人眼视觉特性，去除图像中的冗余信息：
+
+* 空间冗余 (相邻像素相似)
+* 频率冗余 (人眼对高频细节不敏感)
+* 色度冗余 (人眼对颜色变化不如亮度敏感)
+
+</div>
+
+<!-- v -->
+<div class="fragment">
+
+**主要压缩步骤：**
+
+1. 色彩空间转换 & 色度子采样
+2. 离散余弦变换 (DCT)
+3. 量化
+4. Zigzag 扫描
+5. DC 系数差分编码 (DPCM)
+6. AC 系数行程长度编码 (RLE)
+7. 熵编码 (Huffman)
+
+</div>
+
+<div class="fragment">
+
+(信息损失主要发生在步骤 1 和 3)
+</div>
+
+<!-- v -->
+
+### 流程图
+
+```mermaid
+graph LR
+    A[原始 RGB 图像] --> B(1. RGB->YCbCr<br/>色度子采样);
+    B --> C(2. 分块 以及 DCT);
+    C --> D(3. 量化);
+    D --> E(4. Zigzag 扫描);
+    E --> F{分离 DC/AC};
+    F -- DC --> G(5. DPCM 编码);
+    F -- AC --> H(6. RLE 编码);
+    G --> I(7. 熵编码);
+    H --> I;
+    I --> J[压缩后的比特流];
+
+    style B fill:#f9d,stroke:#333,stroke-width:2px
+    style D fill:#f9d,stroke:#333,stroke-width:2px
+```
+
+<div class="fragment">
+
+    (红色节点为主要有损步骤)
+</div>
+
+<!-- s -->
+
+## 1. 色彩空间转换与色度子采样
+
+* **RGB -> YCbCr:**
+    * 将图像从 R(红)G(绿)B(蓝) 空间转换到 Y(亮度)Cb(蓝色度差)Cr(红色度差) 空间。
+    * **原因:** 人眼对亮度 (Y) 的细节远比对色度 (Cb, Cr) 的细节敏感。将亮度和色度分离处理可以更有效地压缩色度信息。
+
+<div class="fragment">
+
+* **色度子采样 (Chroma Subsampling):**
+    * 降低色度通道 (Cb, Cr) 的分辨率。常见模式为 **4:2:0**。
+    * **4:2:0 含义:** 对于每 2x2 的像素块，保留所有 4 个 Y 值，但在水平和垂直方向上，Cb 和 Cr 都只采样一次 (即 Cb 和 Cr 的分辨率变为原来的 1/4)。
+    * **原因:** 利用人眼对色度不敏感的特性，大幅减少需要处理和存储的数据量，这是 JPEG **有损压缩**的第一步。
+
+</div>
+
+<!-- s -->
+
+## 2. 离散余弦变换 (DCT)
+
+* **目的:** 将图像数据从空间域转换到频率域。
+* **原理:**
+    * DCT 将图像块（通常为 8x8 像素）表示为不同频率的余弦波的叠加。
+    * 图像块内像素值通常变化缓慢（空间相关性），DCT 变换后，大部分能量会集中在**低频系数**上（结果矩阵的左上角）。
+    * 高频系数（右下角）通常值很小，代表人眼不敏感的细节变化。
+    * 这为后续的量化步骤（丢弃高频信息）奠定了基础。
+
+<div class="fragment">
+
+* **为何 8x8 块?**
+    * 在计算复杂度和压缩效果之间的权衡。**太小的块**（如 4x4）频率域信息不够丰富，压缩效果差。**太大的块**（如 16x16）计算量大，且可能跨越图像内容变化较大的区域，能量集中效果变差。
+    * 缺点：可能在块边界产生 **块效应 （Blocking Artifacts）**。
+
+</div>
+
+<!-- v -->
+
+### 代码实现与示例
+
+```python
+# 应用 2D DCT
+def dct_2d(block):
+    """对 8x8 块执行二维离散余弦变换"""
+    # 先对行做 DCT，再对结果的列做 DCT (使用正交归一化)
+    return dct(dct(block, axis=1, norm='ortho'), axis=0, norm='ortho')
+
+# 在处理块的循环中调用:
+# block = channel_centered[i:i+8, j:j+8] # 提取 8x8 块
+# dct_block = dct_2d(block) # 执行 DCT
+```
+
+<div class="fragment">
+
+    DCT 后，能量（绝对值较大的系数）集中在左上角的低频区域。DC 系数代表块的平均值。
+</div>
+
+<!-- s -->
+
+## 3. 量化 (Quantization)
+
+* **目的:** **有损压缩**的关键步骤。减少需要表示的数据量，主要通过丢弃人眼不敏感的高频信息。
+* **原理:**
+    * 将 DCT 系数除以一个对应的**量化表 (Quantization Table)** 中的值，然后取整。
+    * 量化表中的值通常是**低频位置小，高频位置大**。
+    * 这意味着低频系数会被较小的值除，精度损失较小；高频系数会被较大的值除，很多会变成 0，从而被丢弃。
+    * JPEG 标准提供了默认的亮度 (Luminance) 和色度 (Chrominance) 量化表。
+
+$$ \text{QuantizedCoefficient}(u, v) = \text{round} \left( \frac{\text{DCTCoefficient}(u, v)}{\text{QuantizationTable}(u, v)} \right) $$
+
+<!-- v -->
+### 质量因子 (Quality Factor)
+
+<div class="fragment">
+
+* 用户可以指定一个质量因子 (通常 1-100)，用于缩放标准量化表。
+    * **高质量 (如 90):** 量化表值变小 -> 量化更精细 -> 损失信息少 -> 文件大。
+    * **低质量 (如 10):** 量化表值变大 -> 量化更粗糙 -> 损失信息多 -> 文件小。
+
+</div>
+
+$$
+S =
+\begin{cases}
+\frac{5000}{Q_{\text{factor}}} & \text{if } 1 \le Q_{\text{factor}} < 50 \\\\
+200 - 2 \times Q_{\text{factor}} & \text{if } 50 \le Q_{\text{factor}} \le 100
+\end{cases}
+$$
+
+$$
+Q_{\text{lum}}(u, v) = \text{clip} \left( \left\lfloor Q_{\text{lum\_std}}(u, v) \times \frac{S}{100} + 0.5 \right\rfloor, \ 1, \ 255 \right)
+$$
+
+<!-- v -->
+
+### 代码实现与示例
+
+```python
+# --- 根据质量因子缩放量化表 --- (在压缩函数开始处)
+if quality_factor < 50:
+    scale = 5000 / quality_factor
+else:
+    scale = 200 - 2 * quality_factor
+scale_factor = scale / 100.0
+Q_lum = np.clip(np.floor(Q_lum_std * scale_factor + 0.5), 1, 255).astype(np.uint8)
+Q_chrom = np.clip(np.floor(Q_chrom_std * scale_factor + 0.5), 1, 255).astype(np.uint8)
+```
+
+<div class="fragment">
+
+    量化后，右下角的高频系数区域出现大量 0。
+</div>
+
+<!-- s -->
+
+## 4. Zigzag 扫描
+
+* **目的:** 将量化后的 8x8 系数块重新排列成一个 1D 向量 (包含 64 个元素)。
+* **原理:**
+    * 按照 "之" 字形路径扫描 8x8 块。
+    * 扫描从左上角 (DC 系数，最低频) 开始，逐渐向右下角 (最高频 AC 系数) 移动。
+    * **效果:** 将低频系数集中在向量的开头，将量化后产生的大量 0 (主要在高频区域) 集中到向量的末尾。
+    * 这极大地有利于后续的**行程长度编码（RLE）**，可以高效地表示长串的 0。
+
+<!-- v -->
+
+### 图示与代码实现
+
+**Zigzag 扫描路径:**
+
+![alt text](images/image.png) <!-- 替换为你本地图片路径或确认此链接有效 -->
+<!-- v -->
+
+**代码实现:**
+
+```python
+# Zigzag 扫描顺序 (预定义好的索引数组)
+zigzag_order = np.array([
+    0,  1,  5,  6, 14, 15, 27, 28,
+    2,  4,  7, 13, 16, 26, 29, 42,
+    # ... (省略中间部分) ...
+    35, 36, 48, 49, 57, 58, 62, 63
+])
+
+# Zigzag 扫描函数
+def zigzag_scan(block):
+    """将 8x8 块按 Zigzag 顺序转换为 1D 向量"""
+    # block.flatten() 先将 8x8 块按行展平成 64 元素向量
+    # 再用 zigzag_order 作为索引，按 Z 字形顺序取出元素
+    return block.flatten()[zigzag_order]
+
+```
+<!-- v -->
+
+**示例:**
+量化块 (部分):
+
+```
+[[32, -6, -2,  0],
+ [-3, -2,  0,  1],
+ [-1,  0,  1,  0],
+ [ 0,  0,  0,  0], ...]
+```
+
+Zigzag 扫描后 (部分):
+`[32, -6, -3, -1, -2, -2, 0, 0, 0, ... , 0, 0, 0]`
+
+<!-- s -->
+
+## 5. DC 系数差分编码 (DPCM)
+
+* **对象:** 每个 8x8 块的第一个系数，即 **DC 系数** (代表块的平均亮度/色度)。
+* **原理:**
+    * 相邻的 8x8 块的 DC 系数值通常是**相关**的，即它们的值比较接近。
+    * 直接编码 DC 系数本身可能需要较多位数 (因为其绝对值可能较大)。
+    * DPCM (Differential Pulse Code Modulation) 利用这种相关性，不直接编码 DC 系数值，而是编码**当前块 DC 系数与前一个块 DC 系数的差值**。
+    * 这个差值通常很小，可以用较少的位数表示。
+
+$$ \text{Difference} _i = \text{DC} _i - \text{DC} _{i-1} $$
+<!-- v -->
+
+<div class="fragment">
+
+* **编码:** 对计算出的差值 `Difference` 进行编码。
+    * 首先，确定表示这个差值需要的 **位数类别（SIZE）**。
+    * 然后，根据差值的正负和 SIZE，计算一个**幅值（Amplitude）** 位序列。
+    * 最终，对 `SIZE` 进行熵编码 (如 Huffman)，并将 `Amplitude` 位直接附加在后面。
+
+</div>
+
+<div class="fragment">
+
+```text
+假设前一个块 DC = 30，当前块 DC = 32。
+dc_diff = 32 - 30 = 2
+get_dc_category_and_amplitude_bits(2) 返回 (size=2, amplitude_val=2)
+对 size=2 进行 Huffman 编码，然后附加 amplitude_val=2 的 2 位二进制 10。
+```
+</div>
+
+<!-- s -->
+
+## 6. AC 系数行程长度编码 (RLE)
+
+* **对象:** Zigzag 扫描后的 AC 系数 (向量中从第 2 个元素到第 64 个元素)。
+* **背景:** 经过量化和 Zigzag 扫描后，AC 系数序列中通常包含**大量连续的 0**，尤其是在序列末尾。
+* **JPEG 中的 RLE:**
+    * 使用 `(RUNLENGTH, VALUE)` 对来表示：`RUNLENGTH` 是遇到的**连续 0 的个数**，`VALUE` 是**紧跟在这些 0 后面的那个非零 AC 系数**。
+
+<!-- v -->
+
+### 示例
+
+AC 系数 (部分): `[-6, -3, -1, 0, 0, 1, 0, 0, 0, 0, ... , 0]` (后面全是 0)
+
+RLE 编码后:
+
+* `(0, -6)` (0 个 0, 值为 -6)
+* `(0, -3)` (0 个 0, 值为 -3)
+* `(0, -1)` (0 个 0, 值为 -1)
+* `(2, 1)`  (2 个 0, 值为 1)
+* `(0, 0)`  (EOB, 后面全是 0)
+
+<!-- v -->
+
+### AC 系数的符号化
+
+* 对 RLE 编码得到的每个非零 AC 系数 `VALUE`，也需要像 DC 系数一样进行符号化，以便后续的熵编码。
+* 计算 `VALUE` 的 **位数类别 (SIZE)** 和 **幅值 (Amplitude)**。
+* 最终用于熵编码的符号是 `(RUNLENGTH, SIZE)` 对（对于 ZRL 是 (15, 0)，对于 EOB 是 (0, 0)），后面紧跟着相应 `Amplitude` 的比特位。
+
+```python
+# 计算 AC 系数值的类别 (SIZE) 和幅值 (Amplitude)
+def get_ac_category_and_amplitude_bits(value):
+    # ... (逻辑同 DC) ...
+    return size, amplitude_val
+
+# 在 RLE 编码中遇到非零 coeff 时:
+# ... (处理 ZRL) ...
+ac_size, ac_amplitude_val = get_ac_category_and_amplitude_bits(coeff)
+# 用于 Huffman 编码的符号是 (run_length, ac_size)
+# 需要写入的幅值位是 ac_amplitude_val 的 ac_size 位
+```
+
+<!-- s -->
+
+## 7. 熵编码 (Entropy Coding)
+
+* **目的:** 对前面步骤产生的符号 (DC 的 SIZE，AC 的 (RUNLENGTH, SIZE) 对) 进行进一步的**无损压缩**。
+* **原理:** 利用符号出现的频率不均等的特性。给出现频率高的符号分配较短的码字，给出现频率低的符号分配较长的码字，从而达到平均码长最短的目的。
+* **JPEG 标准常用方法: 霍夫曼编码**。
+    * 根据符号的统计频率（或使用标准预定义的频率）构建霍夫曼树，生成变长编码表。
+    * DC 系数的 `SIZE` 和 AC 系数的 `(RUNLENGTH, SIZE)` 符号使用霍夫曼编码。
+    * DC 和 AC 系数的 `Amplitude` 位**不进行**霍夫曼编码，直接附加在对应符号的霍夫曼码之后。
+
+<!-- v -->
+
+### 编码结构与示例
+
+**DC 系数编码:**
+
+`HuffmanCode(SIZE) + AmplitudeBits(diff, SIZE)`
+
+**AC 系数编码:**
+
+`HuffmanCode(RUNLENGTH, SIZE) + AmplitudeBits(value, SIZE)`
+
+**示例:**
+
+* DC: `diff = 2` -> `size = 2`, `amp_val = 2` ('10')
+    * 假设 `HuffmanCode(size=2)` 是 `'011'`
+    * 最终比特流: `'011' + '10'`
+* AC: `(run=2, value=1)` -> `(run=2, size=1)`, `amp_val=1` ('1')
+    * 假设 `HuffmanCode(run=2, size=1)` 是 `'11100'`
+    * 最终比特流: `'11100' + '1'`
+
+<!-- v -->
+
+### 代码流程
+
+* **生成霍夫曼表:** `generate_huffman_codes(bits, huffval)` 函数根据 [JPEG 标准附录 K](https://www.w3.org/Graphics/JPEG/itu-t81.pdf) 中的 BITS 和 HUFFVAL 定义生成 `符号 -> (码字, 长度)` 的映射表。
+* **编码:**
+    * 查找 DC `SIZE` 或 AC `(RUNLENGTH, SIZE)` 符号在对应霍夫曼表中的码字。
+    * 将计算得到的 `Amplitude` 值按其 `SIZE` 位数写入比特流。
+* **解码:**
+    * 需要**反向霍夫曼表** (`码字 -> 符号`)。
+    * 根据得到的 `SIZE` 读取相应位数的 `Amplitude` 比特。
+    * 将 `Amplitude` 比特转换回实际的系数值或差值。
+<!-- s -->
+
+## 解压缩流程
+
+1. **熵解码 (逆 Huffman):** 从比特流中读取霍夫曼码和幅值位，恢复 DC SIZE 和 AC (RUNLENGTH, SIZE) 符号，以及 DC 差值和 AC 系数值。
+2. **逆 RLE:** 根据解码出的 (RUNLENGTH, SIZE) 和 AC 值，重建 AC 系数序列（包括填 0 和处理 EOB）。
+3. **逆 DPCM:** 根据解码出的 DC 差值和前一个块的 DC 值，恢复当前块的 DC 系数。
+4. **组合 DC/AC & 逆 Zigzag:** 将 DC 和 AC 系数组合成 64 位向量，然后进行逆 Zigzag 扫描，恢复 8x8 量化系数块。
+5. **反量化:** 将量化系数块乘以压缩时使用的（相同质量因子下的）量化表，得到近似的 DCT 系数。
+
+<!-- v -->
+
+6. **逆 DCT (IDCT):** 对 DCT 系数块执行 IDCT，恢复像素值块 (中心化的)。
+7. **组合块 & 色度上采样 & YCbCr->RGB:**
+    * 将所有重建的 8x8 块拼接回完整的 Y, Cb, Cr 通道 (移除填充)。
+    * 对 Cb, Cr 通道进行**上采样**，恢复到原始分辨率。
+    * 将 Y, Cb, Cr 转换回 RGB 色彩空间。
+
+<!-- s -->
+
+## 演示与结果 | 质量因子 Q=2
+
+<div class="mul-cols">
+<div class="col">
+
+![alt text](images/image-1.png)
+
+</div>
+<div class="col">
+
+![alt text](images/image-2.png)
+
+</div>
+</div>
+
+<!-- v -->
+
+### 压缩性能
+
+* **原始文件大小:** 786,486 字节
+* **压缩文件大小 (Q=2):** 5796 字节
+* **压缩比:** 135.69 : 1
+
+<!-- v -->
+
+## 演示与结果 | 质量因子 Q=20
+
+<div class="mul-cols">
+<div class="col">
+
+![alt text](images/image-1.png)
+
+</div>
+<div class="col">
+
+![alt text](images/image-3.png)
+
+</div>
+</div>
+
+<!-- v -->
+
+### 压缩性能
+
+* **原始文件大小:** 786,486 字节
+* **压缩文件大小 (Q=20):** 19645 字节
+* **压缩比:** 40.03 : 1
+
+<!-- s -->
+
+## 质量因子的影响
+
+![alt text](images/image-4.png)
+
+<!-- s -->
+
+<div class="middle center">
+<div style="width: 100%">
+
+# 谢谢！恳请各位批评指正
+
+</div>
+</div>
+          </textarea>
+        </section>
+      </div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./mermaid/dist/mermaid.min.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        highlight: {
+          highlightOnLoad: false
+        },
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"slide","transitionSpeed":"fast","center":false,"slideNumber":"c/t","width":1100,"_":["main.md"],"static":"..","assets-dir":"assets","assetsDir":"assets","images-dir":"images","imagesDir":"images"}, queryOptions);
+    </script>
+
+    <script src="./assets/mermaid.min.js"></script>
+    <script src="./assets/reveal-mermaid.js"></script>
+
+    <script>
+      Reveal.initialize(options);
+      Reveal.addEventListener('ready', function (event) {
+        const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
+        const hlp = Reveal.getPlugin('highlight');
+        blocks.forEach(hlp.highlightBlock);
+      });
+    </script>
+
+    <script>
+      const mermaidOptions = extend({ startOnLoad: false }, {});
+      mermaid.startOnLoad = false;
+      mermaid.initialize(mermaidOptions);
+      const cb = function (event) { mermaid.init(mermaidOptions, '.stack.present>.present pre code.mermaid'); };
+      Reveal.addEventListener('ready', cb);
+      Reveal.addEventListener('slidetransitionend', cb);
+    </script>
+  </body>
+</html>

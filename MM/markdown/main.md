@@ -322,7 +322,7 @@ RLE 编码后:
 ### AC 系数的符号化
 
 * 对 RLE 编码得到的每个非零 AC 系数 `VALUE`，也需要像 DC 系数一样进行符号化，以便后续的熵编码。
-* 计算 `VALUE` 的 **位数类别 (SIZE)** 和 **幅值 (Amplitude)**。
+* 计算 `VALUE` 的 **位数类别 (SIZE)** 和 **幅值（Amplitude）**。
 * 最终用于熵编码的符号是 `(RUNLENGTH, SIZE)` 对（对于 ZRL 是 (15, 0)，对于 EOB 是 (0, 0)），后面紧跟着相应 `Amplitude` 的比特位。
 
 ```python

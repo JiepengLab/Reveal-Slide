@@ -380,7 +380,7 @@ revealOptions:
 
 ## 总结 (续)
 
-**关键技术选型与决策 (体现课堂原则):**
+**关键技术选型与决策:**
 
 * **前端 Ant Design Pro:** 降低开发门槛，提升 **可用性** 和 **一致性** <font size="5" color="grey">(Ch.15 UI Design)</font>。
 * **数据库 Schema 优先设计:** 保证 **数据设计** 的重要性 <font size="5" color="grey">(Ch.12 Data Design)</font>。

@@ -1,5 +1,5 @@
 ---
-title: 软件工程第一次展示
+title: 软件工程第一次展示 - 医院信息管理系统
 separator: <!-- s -->
 verticalSeparator: <!-- v -->
 theme: simple
@@ -13,6 +13,7 @@ revealOptions:
     slideNumber: "c/t"
     width: 1000
 ---
+
 <div class="middle center">
 <div style="width: 100%">
 
@@ -45,13 +46,13 @@ revealOptions:
 
 **背景:**
 
-* 传统医疗服务模式在资源配置、患者体验、管理效率等方面存在挑战 (信息孤岛, 流程繁琐, 资源浪费)。
-* 信息技术发展 (数字化、智能化) 为医疗行业转型提供了契机。
-* 现有系统不足：部分医院系统功能基础，缺乏深度整合与智能分析；小型机构系统缺失。
+* 传统医疗服务模式在资源配置、患者体验、管理效率等方面存在挑战 (**信息孤岛**, **流程繁琐**, **资源浪费**)。*(连接课堂Ch.1 Case 1 Brooks提及的大系统复杂性问题)*
+* 信息技术发展 (数字化、智能化) 为医疗行业转型提供了契机。*(连接课堂Ch.1 提及的软件演进方向)*
+* 现有系统不足：部分医院系统功能基础，缺乏深度整合与智能分析；小型机构系统缺失。*(Legacy Software 需要 Enhance/Extend - Ch.1)*
 
 **项目目标:**
 
-* 开发一套集成化、数字化、智能化的医院信息管理系统。
+* 开发一套集成化、数字化、智能化的医院信息管理系统。*(目标是提供Value - Ch.2 General Principle)*
 * 提升医疗服务效率与质量，优化患者就医体验。
 * 实现医疗资源的精细化管理与优化配置。
 * 为医院管理层提供数据驱动的决策支持。
@@ -72,7 +73,7 @@ revealOptions:
 
 ## 1.2 用户需求分析
 
-**核心用户角色 & 需求痛点:**
+**核心用户角色 & 需求痛点:** *(对应课堂 Ch.8 Inception - Identify Stakeholders)*
 
 * **患者:**
     * **需求:** 便捷预约、减少排队、远程问诊、清晰了解病情与费用、个人健康信息管理、隐私保护。
@@ -86,9 +87,11 @@ revealOptions:
 
 **需求分析细节 (课堂知识点体现):**
 
-* **场景分析:** 细化了如“患者首次预约”、“医生处理请假”、“管理员分配号源”、“药剂科入库”、“设备科维护”等具体场景 (参考各报告用例 Sec 4.1)。
-* **优先级划分:** 区分核心需求 (如登录、预约、病历查看、库存管理) 和辅助需求 (如评价、高级查询)，并根据用户角色确定优先级 (参考报告 1 Sec 3.2 表2, 报告 4 Sec 3.2, 报告 5 表 2)。
-* **数据驱动:** 强调了数据记录与分析需求，如预约记录分析、资源使用率统计、成本核算，为管理决策提供依据。
+* **场景分析 (Use Cases - Ch.8/9):** 细化了如“患者首次预约 (Primary Scenario)”、 “预约时号源已被占用 (Alternative Interaction)” 、“医生处理请假”、“管理员分配号源”、“药剂科入库”、“设备科维护”等具体场景。
+* **需求获取 (Elicitation - Ch.8):** 通过分析现有系统痛点、结合小组讨论和模拟用户场景进行需求挖掘。*(虽然没有正式会议，但体现了Elicitation的思考)*
+* **优先级划分:** 区分核心需求 (如登录、预约、病历查看、库存管理 - Must Have) 和辅助需求 (如评价、高级查询 - Nice to Have)，并根据用户角色确定优先级。
+* **数据驱动:** 强调数据记录与分析需求，为管理决策提供依据。
+* **挑战识别 (Ch.8 Problems):** 识别到可能的范围蔓延 (Scope)、需求理解偏差 (Understanding)、需求变更 (Volatility) 风险，需要在开发中持续管理。
 
 <!-- v -->
 
@@ -102,24 +105,24 @@ revealOptions:
 | **网上预约**     | 查看号源/科室/医生, 预约/取消/修改, 支付, 评价, 提醒        | 号源实时同步, 冲突检测, 支付集成, 消息通知                         |
 | **资源管理**     | (药品) 库存/效期/批次管理, (设备) 维护/状态跟踪, (病房) 床位分配/状态, (人员) 排班管理, (财务) 成本核算 | 溯源, 预警, 可视化, 负载均衡, 冲突检测, 财务关联, 合规审计         |
 
-*参考来源: 各报告 Section 3.1 及核心功能描述*
+*参考来源: 各报告 Section 3.1 及核心功能描述。这些功能需求构成了系统 **Scope** (Ch.8)*
 
 <!-- v -->
 
-## 1.4 非功能性需求
+## 1.4 非功能性需求 (NFRs - Ch.8)
 
-* **性能:**
-    * **响应时间:** 关键操作 (查询、提交) < 2-5秒 (不同模块要求略有差异)。
-    * **吞吐量:** 支持高峰期并发用户数 (e.g., 500-2000+ QPS, 视模块而定), 处理高频事务。
+* **性能 (Performance):** *(对应 Ch.19 Quality Dimension)*
+    * **响应时间:** 关键操作 < 2-5秒。
+    * **吞吐量:** 支持高峰期并发用户数 (目标 >1000 QPS 核心接口)。
     * **资源利用:** CPU < 80%, 内存 < 85%。
-* **安全性:**
+* **安全性 (Security):** *(对应 Ch.19 Quality Dimension)*
     * 数据加密 (传输/存储), 强身份认证, 细粒度权限控制, 操作审计, 防注入/跨站攻击, 隐私保护 (符合《个人信息保护法》等)。
-* **可用性 & 可靠性:**
+* **可用性 & 可靠性 (Availability & Reliability):** *(对应 Ch.19 Quality Dimension)*
     * 界面简洁直观 (基于 Ant Design 规范), 操作便捷, 跨浏览器/多终端兼容, 高可用性 (>99.9%), 故障自动恢复/冗余设计。
-* **可维护性 & 可扩展性:**
-    * 微服务/模块化设计, 代码规范, 清晰的接口文档 (Apifox), 日志完善, 支持功能迭代与第三方集成。
+* **可维护性 & 可扩展性 (Maintainability & Scalability):** *(对应 Ch.19 Quality Dimension)*
+    * 微服务/模块化设计, 代码规范, 清晰的接口文档 (Apifox), 日志完善, 支持功能迭代与第三方集成。*(支持 Legacy Software 演进 - Ch.1)*
 * **开发效率:**
-    * 选用成熟框架 (Ant Design Pro) 降低前端学习和开发成本，提供最佳实践和可复用组件。
+    * 选用成熟框架 (Ant Design Pro) 降低前端学习和开发成本，提供最佳实践和可复用组件。*(考虑 Human Factors - Ch.6)*
 
 *参考来源: 各报告性能指标/非功能需求章节 + 新增信息*
 
@@ -137,62 +140,61 @@ revealOptions:
 
 ## 2.1 设计方法与原则
 
-**设计方法:**
+**设计方法:** *(课堂 Ch.2/7/9/10/12)*
 
 * **面向对象分析与设计 (OOAD):** 采用类、对象、继承、多态等概念进行建模。
-* **统一建模语言 (UML):** 使用多种 UML 图进行可视化设计 (用例图, 类图, 状态图, 数据流图等)。
-* **CRC 卡 (Class-Responsibility-Collaboration):** 辅助识别类的职责和协作关系。
+* **统一建模语言 (UML):** 使用多种 UML 图进行可视化设计 (用例图, 类图, 状态图, 数据流图等)。*(Analysis/Design Modeling - Ch.9-11)*
+* **CRC 卡 (Class-Responsibility-Collaboration):** 用于识别类的职责和协作关系 (见各组报告)。*(Ch.10)*
 
-**设计原则:**
+**设计原则:** *(课堂 Ch.7/12)*
 
-* **模块化/微服务化:** 将系统按业务领域划分为独立的、高内聚、低耦合的服务/模块。
-* **分层:** 在各服务内部或整体架构中采用分层思想 (表示层、业务逻辑层、数据访问层)。
-* **接口驱动:** 定义清晰、稳定的服务间 API 接口 (使用 RESTful 风格)。
-* **数据一致性:** 在分布式环境下考虑数据一致性策略 (如最终一致性、事务消息 - RocketMQ)。
+* **模块化/微服务化 (Modularity):** 将系统按业务领域划分为独立的、高内聚、低耦合的服务/模块。*(Ch.12)*
+* **分层 (Layered):** 在各服务内部或整体架构中采用分层思想 (表示层、业务逻辑层、数据访问层)。*(Ch.13 Architectural Style)*
+* **接口驱动 (Interface Design):** 定义清晰、稳定的服务间 API 接口 (使用 RESTful 风格)。*(Ch.12/15)*
+* **信息隐藏/封装 (Information Hiding/Encapsulation):** 通过接口暴露必要信息，隐藏内部实现细节。*(Ch.10/12)*
+* **关注点分离 (Separation of Concerns - SoC):** 将不同职责分离到不同模块/类。*(Ch.7/12)*
+* **数据一致性:** 在分布式环境下考虑数据一致性策略。
 * **安全性:** 在设计阶段充分考虑认证、授权、数据加密和访问控制。
-* **用户中心:** 遵循 Ant Design 设计规范，提供一致且高效的用户体验。
+* **用户中心:** 遵循 Ant Design 设计规范，提供一致且高效的用户体验。*(Golden Rules - Ch.15)*
+* **KISS (Keep It Simple, Stupid!):** 避免过度设计。*(Ch.2 General Principle)*
 
 <!-- v -->
 
 ## 2.2 系统架构设计
 
-**采用前后端分离的微服务架构:**
+**采用前后端分离的微服务架构:** *(符合 Modularity, SoC 原则 - Ch.12)*
 
 <div class="mul-cols">
 <div class="col">
 
-**逻辑架构:**
+**逻辑架构:** *(类似 Ch.13 Layered Architecture 概念，但应用于服务层面)*
 
 1. **表示层 (前端):**
     * **框架:** **Ant Design Pro** (基于 React, 集成 Umi 框架和 Ant Design 组件库)
-        * *选择理由:* 提供企业级最佳实践，内置布局/列表等组件，显著降低开发成本和学习曲线；Ant Design Vue 版本较旧。
+        * *选择理由:* 提供企业级最佳实践，内置布局/列表等组件，显著降低开发成本和学习曲线；Ant Design Vue 版本较旧。*(考虑开发效率和团队技能 - Human Factors Ch.6)*
         * *参考:* [Pro Docs](https://pro.ant.design/zh-CN/docs/getting-started), [Ant Design Spec](https://ant-design.antgroup.com/docs/spec/introduce-cn)
     * *(状态: 框架搭建中，计划进行培训)*
-2. **应用层 (后端 - 微服务):**
-    * **API 网关:** (推荐) 统一认证、路由、限流、熔断。
+2. **应用层 (后端 - 微服务):** *(每个服务可视为一个 Component - Ch.14)*
+    * **API 网关:** (推荐) 统一认证、路由、限流、熔断。*(类似 Broker Pattern - Ch.13)*
     * **核心业务服务 (通过 Git Submodule 管理):**
-        * 用户服务
-        * 预约服务
-        * 问诊服务
-        * 病历服务
-        * 资源管理服务
-    * **技术栈:** Java/Spring Boot 或 Python/Django (根据各组报告选择)
+        * 用户服务, 预约服务, 问诊服务, 病历服务, 资源管理服务
+    * **技术栈:** Java/Spring Boot 或 Python/Django
     * *(状态: API已定义，可开始开发)*
 3. **数据层:**
-    * **数据库:** **MySQL 8.0+** (Hosted on Cloud Server: `8.219.114.221`, DB: `medical_system`, User: `zjuse`)
-        * *Schema:* 已设计并部署，重点考虑了外键关联。
+    * **数据库:** **MySQL 8.0+** (Hosted: `8.219.114.221`, DB: `medical_system`, User: `zjuse`)
+        * *Schema:* 已设计并部署，重点考虑了外键关联。*(Data/Class Design - Ch.12)*
         * *文档:* **[dbdocs.io Online Wiki](https://dbdocs.io/1978264748/E_Health)**
-    * **缓存:** Redis (用于热点数据缓存)
-    * **消息队列:** RocketMQ (用于异步处理，如药品入库事务)
+    * **缓存:** Redis *(用于提升性能 - Persistence Pattern 辅助 - Ch.13)*
+    * **消息队列:** RocketMQ *(用于异步处理，解耦，提高可靠性 - 可能涉及 Concurrency/Distribution Patterns - Ch.13)*
 4. **基础设施:**
     * 云服务器 (ECS)
-    * 容器化 (Docker - 推荐)
+    * 容器化 (Docker - 推荐) *(便于部署和环境一致性)*
     * 日志/监控服务
 
 </div>
 <div class="col" style="font-size: 0.8em;">
 
-**物理部署/交互 (示意):**
+**物理部署/交互 (示意):** *(Deployment Model Element - Ch.12)*
 
 ```mermaid
 graph TD
@@ -246,7 +248,7 @@ graph TD
 
 ```
 
-*注: 服务间调用关系仅为示例。*
+*注: 服务间调用关系仅为示例。体现了组件间的依赖。*
 
 </div>
 </div>
@@ -260,7 +262,7 @@ graph TD
 <div class="mul-cols">
 <div class="col">
 
-**用例图 (示例: 预约与问诊核心流程)**
+**用例图 (Use Case Diagram - Ch.8/9):** *(示例: 预约与问诊核心流程)*
 
 ```mermaid
 graph TD
@@ -290,12 +292,12 @@ graph TD
     end
 ```
 
-*示意图，综合报告2和报告4用例*
+*描述系统功能边界和 Actor 交互。*
 
 </div>
 <div class="col" style="font-size: 0.9em;">
 
-**类图 (核心实体关联 - 简化)**
+**类图 (Class Diagram - Ch.10):** *(核心实体关联 - 简化)*
 
 ```mermaid
 classDiagram
@@ -321,7 +323,7 @@ classDiagram
     class HospitalExpense
     class PaymentRecord
 
-    %% 关系 (部分核心)
+    %% 关系 (部分核心) - Associations & Multiplicity
     Patient "1" -- "*" Appointment
     Doctor "1" -- "*" Appointment
     Patient "1" -- "*" MedicalRecord
@@ -336,7 +338,7 @@ classDiagram
     Ward "1" -- "*" WardBed
     Patient "1" -- "*" Consultation
     Doctor "1" -- "*" Consultation
-    Consultation "1" .. "1" MedicalRecord : references/updates
+    Consultation "1" .. "1" MedicalRecord : references/updates % Dependency
     HospitalExpense "1" -- "1" PaymentRecord : relates to
     MedicineStockIn "1" -- "*" Medicine
     MaintenanceRecord "1" -- "1" Equipment
@@ -344,7 +346,7 @@ classDiagram
 
 ```
 
-*综合各组类图信息* <br/>
+*展示系统静态结构、类、属性、方法和关系。* <br/>
 **详细 Schema & 外键:** **[dbdocs.io](https://dbdocs.io/1978264748/E_Health)**
 </div>
 </div>
@@ -356,7 +358,7 @@ classDiagram
 <div class="mul-cols">
 <div class="col">
 
-**状态图 (示例: 预约 Appointment)**
+**状态图 (State Diagram - Ch.11):** *(示例: 预约 Appointment)*
 
 ```mermaid
 stateDiagram-v2
@@ -365,8 +367,8 @@ stateDiagram-v2
     ToBePaid --> Canceled : 支付超时 / timeout()
     ToBePaid --> Canceled : 用户取消 / cancel()
 
-    Pending --> Visited : 就诊完成 / setVisited()
-    Pending --> Unvisited : 未按时就诊 / setUnvisited()
+    Pending --> Visited : 就诊完成 / setVisited() [isVisited==true]
+    Pending --> Unvisited : 未按时就诊 / setUnvisited() [isTimeout]
     Pending --> ApplyReschedule : 申请改期 / applyReschedule()
     Pending --> ApplyCancel : 申请取消 / applyCancel()
 
@@ -381,12 +383,12 @@ stateDiagram-v2
 
 ```
 
-*参考报告4状态图逻辑*
+*描述对象 (Appointment) 的生命周期和状态转换。*
 </div>
 
 <div class="col">
 
-**数据流图 (DFD - Level 0 示例: 核心交互)**
+**数据流图 (DFD - Level 0 - Ch.9):** *(示例: 核心交互)*
 
 ```mermaid
 graph TD
@@ -394,34 +396,34 @@ graph TD
     D[外部实体: 医生]
     A[外部实体: 管理员]
     SP[外部实体: 供应商] % 新增
-    S[处理: 医院信息系统<br/>(用户/预约/问诊/病历/资源)]
-    DB[(数据存储: 综合数据库)]
+    S[处理(Process): 医院信息系统<br/>(用户/预约/问诊/病历/资源)]
+    DB[(数据存储(Data Store): 综合数据库)]
 
-    P -- 预约/问诊/信息查询 --> S
-    S -- 确认/回复/病历/费用 --> P
-    D -- 排班/诊疗/病历录入/维护 --> S
+    P -- 预约请求/问诊请求/信息查询 --> S
+    S -- 预约确认/问诊回复/病历信息 --> P
+    D -- 排班信息/诊疗操作/病历录入/维护 --> S
     S -- 预约列表/患者信息/工单 --> D
     A -- 用户管理/资源配置/规则/审计 --> S
     S -- 状态/报表/日志 --> A
-    SP -- 药品/设备供货单 --> S % 新增
-    S -- 采购订单/退货通知 --> SP % 新增
+    SP -- 药品/设备供货单 --> S
+    S -- 采购订单/退货通知 --> SP
 
     S -- 读写 --> DB
 ```
 
-*顶层视图，综合各模块交互，增加了供应商*
+*展示系统与外部实体的数据流动，以及系统内部高层数据处理。*
 
 </div>
 </div>
-*注：CRC卡在报告中有体现 (如报告1 Sec 4.4, 报告5 Sec 4.4)，用于细化类职责，此处不重复展示。*
+*注：CRC卡在报告中有体现 (如报告1 Sec 4.4, 报告5 Sec 4.4)，用于细化类职责。*
 
 <!-- v -->
 
 ## 2.5 接口与组件设计
 
-**接口设计 (API - RESTful):**
+**接口设计 (API - RESTful):** *(对应 Interface Design - Ch.12/15)*
 
-* **原则:** 使用标准 HTTP 方法, 面向资源设计 URL, 使用 JSON。
+* **原则:** 使用标准 HTTP 方法, 面向资源设计 URL, 使用 JSON。*(Consistency Principle - Ch.7)*
 * **示例 (部分核心接口):**
     * `POST /api/auth/login`
     * `GET /api/appointments?patientId={id}`
@@ -430,20 +432,15 @@ graph TD
     * `POST /api/records`
     * `POST /api/resource/medicines/stock-in` (药品入库)
     * `GET /api/resource/equipments/{id}/maintenance` (查设备维护记录)
-* **API 文档:** **[Apifox Wiki](https://cbfs62hkmj.apifox.cn/)** (包含详细数据模型)
+* **API 文档:** **[Apifox Wiki](https://cbfs62hkmj.apifox.cn/)** (包含详细数据模型) *(Documentation as part of Software Configuration - Ch.2/5)*
 
-**组件设计 (微服务/模块内部):**
+**组件设计 (Component-Level Design - Ch.14):** *(微服务/模块内部)*
 
-* **用户服务:** 认证、授权、用户档案管理。
-* **预约服务:** 号源查询、预约逻辑 (含冲突检测)、状态机、通知。
-* **问诊服务:** 通信管理、病历集成、处方校验、评价处理。
-* **病历服务:** 病历CRUD、版本控制、权限管理、模板引擎。
-* **资源管理服务:**
-    * *药品:* 库存(批次/效期)、出入库、预警、溯源。
-    * *设备:* 档案、维护计划、工单、状态、成本核算。
-    * *病房:* 床位状态、分配算法、可视化。
-    * *排班:* 规则配置、冲突检测、排班生成。
-    * *财务:* 费用记录、收支分类、对账。
+* **用户服务:** 认证、授权、用户档案管理组件。*(High Cohesion, Low Coupling - Ch.12/14)*
+* **预约服务:** 号源查询、预约逻辑、状态机、通知组件。
+* **问诊服务:** 通信管理、病历集成、处方校验、评价组件。
+* **病历服务:** CRUD 操作、版本控制、权限管理、模板组件。
+* **资源管理服务:** 库存、维护、床位、排班、财务等子组件。 *(SoC Principle - Ch.7/12)*
 
 *设计考虑了职责分离，便于独立开发、部署和扩展。*
 
@@ -459,57 +456,66 @@ graph TD
 
 <!-- v -->
 
-## 3.1 质量保证措施
+## 3.1 质量保证措施 (SQA - Ch.2/19/21)
 
-**目标:** 确保系统功能正确、性能稳定、安全可靠、易于使用和维护。
+**目标:** 确保系统功能正确、性能稳定、安全可靠、易于使用和维护。 *(Focus on Quality at Every Step - Ch.7)*
 
-**主要措施:**
+**主要措施 (Umbrella Activities - Ch.2):**
 
-* **需求评审:** 小组内部及大组间交叉评审需求报告，确保理解一致、无歧义、完整。 *(本周截止)*
-* **设计评审:** 对架构、数据库 Schema (dbdocs.io)、API 设计 (Apifox) 进行评审。
-* **代码规范与审查 (Code Review):** 制定统一规范，成员间代码互审 (**通过 Pull Request 强制执行**)。
-* **版本控制:** 使用 Git (git.zju.edu.cn) 进行代码版本管理和协作 (**见后页工作流**)。
-* **自动化测试:** 单元测试、集成测试、API 功能/性能测试 (Apifox)。
-* **系统测试:** 根据验证准则进行端到端功能验证。
+* **需求评审/验证 (Requirements Validation - Ch.8):** 小组内部及大组间交叉评审需求报告，确保理解一致、无歧义、完整、可测试。 *(本周截止)*
+* **设计评审 (Design Review):** 对架构、数据库 Schema (dbdocs.io)、API 设计 (Apifox) 进行评审。*(FTRs - Ch.20)*
+* **代码规范与审查 (Code Review):** 制定统一规范，成员间代码互审 (**通过 Pull Request 强制执行**)。*(FTRs - Ch.20)*
+* **版本/配置管理 (Configuration Management - Ch.2/17):** 使用 Git (git.zju.edu.cn) 进行代码版本管理和协作 (**见后页工作流**)。
+* **自动化测试:** *(Testing Principles - Ch.7/14)*
+    * 单元测试 (Unit Testing - Ch.14)
+    * 集成测试 (Integration Testing)
+    * API 功能/性能测试 (Apifox)
+* **系统测试/功能测试:** 根据验证准则进行端到端功能验证。
 * **用户验收测试 (UAT):** 邀请模拟用户进行实际操作测试。
-* **文档管理:** 维护需求、设计(UML, DB Schema, API)、测试、用户手册等文档。
+* **文档管理:** 维护需求、设计(UML, DB Schema, API)、测试、用户手册等文档。*(Documentation - Ch.5)*
 
 <!-- v -->
 
 ## 3.2 项目管理与协作
 
-**协作工具与平台:**
+**项目会议 (Communication - Ch.7):**
 
-* **代码托管 & 版本控制:** ZJU Git (`git.zju.edu.cn`)
+* **定期:** 小组内部周会，大组协调会 (按需)。*(Facilitated, Notes taken)*
+* **不定期:** 技术攻关、设计评审、需求变更讨论。
+* **记录:** 重要会议进行记录与追踪。
+
+**协作工具与平台:** *(Tools layer in SE - Ch.2)*
+
+* **代码托管 & 版本控制:** **ZJU Git (`git.zju.edu.cn`)**
 * **API 设计/文档/测试:** Apifox ([cbfs62hkmj.apifox.cn](https://cbfs62hkmj.apifox.cn/))
 * **数据库 Schema 文档:** dbdocs.io ([E_Health Schema](https://dbdocs.io/1978264748/E_Health))
 * **沟通:** 钉钉群 (用于通知、日常沟通、直播培训)
 * **任务管理:** (待定，可使用钉钉项目或 GitLab Issues)
 
-**代码版本控制与工作流 (Git & Submodules):**
+**代码版本控制与工作流 (Git & Submodules):** *(Process Adaptation & Configuration Management - Ch.2)*
 
 * **仓库结构:** 主仓库 (`E-Health`) + 各子系统作为 **Git Submodules** (`systems/*`)。
-* **分支策略:**
+* **分支策略:** *(Adaptation of standard Gitflow)*
     * `main`: 生产环境稳定分支 (受保护)。
     * `dev`: 开发主分支 (受保护)。
     * `feat/*`, `fix/*`, `docs/*`: 功能/修复/文档分支 (基于 `dev` 创建)。
-* **代码获取 (Clone):** 必须使用 `--recurse-submodules` 拉取子模块。
+* **代码获取 (Clone):** **必须**使用 `--recurse-submodules`。
 
     ```bash
     git clone --recurse-submodules -b dev git@git.zju.edu.cn:2025zju_se/E-Health.git
     ```
 
-* **代码更新 (Pull):** 拉取父仓库和子模块更新。
+* **代码更新 (Pull):** **必须**使用 `--recurse-submodules`。
 
     ```bash
     # 在父仓库根目录执行
     git pull origin dev --recurse-submodules
     ```
 
-* **代码提交 (Push & PR):**
-    1. **子模块修改:** 在子模块目录 (`systems/xxx`) 内 `add`, `commit`, `push`。
-    2. **父仓库更新引用:** 在父仓库根目录 `add .`, `commit -m "Update submodule xxx"`。
-    3. **创建 Pull Request:** 从本地 `feat/*` 分支推送到远程，然后在 ZJU Git 网页创建 PR，请求合并到 `dev` 分支。**不允许直接推送 `dev` 分支。**
+* **代码提交 (Push & PR):** *(Ensures review before merge)*
+    1. **子模块修改:** 在子模块目录 `add`, `commit`, `push`。
+    2. **父仓库更新引用:** 在父仓库根目录 `add .`, `commit`。
+    3. **创建 Pull Request:** 从本地 `feat/*` 分支推送到远程，网页创建 PR 请求合并到 `dev`。**禁止直接推送 `dev`**。
 
 **当前状态与下一步:**
 
@@ -518,7 +524,7 @@ graph TD
 * **开发:**
     * *前端:* Ant Design Pro 框架搭建中，将进行培训。
     * *后端:* 可基于 Apifox 定义的 API 和 Git 工作流开始开发。
-    * *数据库:* 已可用 (见 Sec 2.2)。
+    * *数据库:* 已可用。
 * **下一步:** 完成需求报告 -> 细化 API 设计 -> 并行开发前后端 (遵循 Git 工作流) -> 集成测试。
 
 <!-- s -->
@@ -535,17 +541,17 @@ graph TD
 
 ## 总结
 
-* **需求分析:** 深入分析了多方用户需求，明确了系统功能与非功能要求。
-* **系统设计:** 确定采用前后端分离的微服务架构，选定 Ant Design Pro + MySQL + Redis + RocketMQ 技术栈；完成了数据库 Schema 初步设计与部署；使用 Apifox 管理 API。
-* **质量与管理:** 建立了评审、测试、**规范的 Git 工作流 (含 Submodule 和 PR)** 等质量保证与协作机制；明确了使用的在线协作工具。
+* **需求分析:** 遵循 **Requirements Engineering** 流程 (Inception, Elicitation, ...) 思想，深入分析了用户需求，明确了系统功能与非功能要求，识别了潜在挑战。
+* **系统设计:** 采用 **OOAD** 和 **UML**，确定了前后端分离的微服务架构，应用了 **分层**、**模块化**、**SoC**、**信息隐藏** 等设计原则；选定了具体技术栈 (AntD Pro, MySQL, Redis, MQ)；完成了数据库 Schema 初步设计与部署；使用 **Apifox** 和 **dbdocs.io** 进行设计协作与文档化。
+* **质量与管理:** 建立了包含 **评审(FTRs)**、**测试**、**配置管理 (Git Submodule + PR)** 的 **SQA** 措施；明确了项目协作流程和工具。
 
-**关键技术选型与决策:**
+**关键技术选型与决策 (体现课堂原则):**
 
-* **前端 Ant Design Pro:** 降低开发门槛，提高效率和体验一致性。
-* **数据库 Schema 优先设计 (dbdocs.io):** 提供可靠数据基础，解决关联表达问题。
-* **Git Submodules:** 有效管理微服务/模块化代码。
-* **受保护分支 + Pull Request:** 强制代码审查，保障开发分支稳定性。
-* **在线协作工具 (Apifox, dbdocs):** 提升团队协作效率和设计文档可视化。
+* **前端 Ant Design Pro:** 降低开发门槛，提升 **可用性** 和 **一致性** (Ch.15)。
+* **数据库 Schema 优先设计:** 保证 **数据设计** 的重要性 (Ch.12)。
+* **微服务 & Git Submodules:** 实现 **模块化** 和 **关注点分离** (Ch.12)，便于 **演化** (Ch.4)。
+* **受保护分支 + Pull Request:** 强制 **代码审查**，提升 **质量** (Ch.20)。
+* **在线协作工具:** 促进 **沟通** 与 **协作** (Ch.7)。
 
 <!-- v -->
 

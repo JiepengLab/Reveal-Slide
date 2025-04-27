@@ -202,8 +202,7 @@ revealOptions:
     * **API 网关:** 统一认证、路由、限流、熔断。<font size="5" color="grey">(类似 Broker Pattern - Ch.13.3)</font>
     * **核心业务服务 (通过 Git Submodule 管理):**
         * 用户服务, 预约服务, 问诊服务, 病历服务, 资源管理服务
-    * **技术栈:** Java/Spring Boot 或 Python/Django
-    * *(状态: [API](https://cbfs62hkmj.apifox.cn/)已定义，可开始开发)*
+    * **技术栈:** Java/Spring Boot 或 Python/Django...
 <!-- v -->
 
 ## 2.2 系统架构设计(续 2)

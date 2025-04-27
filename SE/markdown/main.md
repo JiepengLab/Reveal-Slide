@@ -50,7 +50,6 @@ revealOptions:
 * 信息技术发展 (数字化、智能化) 为医疗行业转型提供了契机。<font size="5" color="grey">(对应 Ch.1 Software Evolution & Changing Nature of Software)</font>
 * 现有系统不足：部分医院系统功能基础，缺乏深度整合与智能分析；小型机构系统缺失。<font size="5" color="grey">(Legacy Software 需要 Enhance/Extend - Ch.1.1)</font>
 
-
 **项目目标:**
 
 * 开发一套集成化、数字化、智能化的医院信息管理系统。<font size="5" color="grey">(目标是提供Value to users - Ch.2.3 General Principle 1)</font>
@@ -125,7 +124,6 @@ revealOptions:
 
 ## 1.4 非功能性需求 (NFRs - Ch.8.2)
 
-
 * **性能 (Performance):** <font size="5" color="grey">(Ch.19.2 Quality Dimension)</font>
     * **响应时间:** 关键操作 < 2-5秒。
     * **吞吐量:** 支持高峰期并发用户数 (目标 >1000 QPS 核心接口)。
@@ -143,7 +141,6 @@ revealOptions:
     * 微服务/模块化设计, 代码规范, 清晰的接口文档 (Apifox), 日志完善, 支持功能迭代与第三方集成。<font size="5" color="grey">(支持 Legacy Software 演进 - Ch.1.1)</font>
 * **开发效率:**
     * 选用成熟框架 (Ant Design Pro) 降低前端学习和开发成本，提供最佳实践和可复用组件。<font size="5" color="grey">(考虑 Human Factors - Ch.6)</font>
-
 
 <!-- s -->
 
@@ -196,7 +193,6 @@ revealOptions:
     * **框架:** **Ant Design Pro** (基于 React, 集成 Umi 框架和 Ant Design 组件库)
         * *选择理由:* 提供企业级最佳实践，内置布局/列表等组件，显著降低开发成本和学习曲线；Ant Design Vue 版本较旧。<font size="5" color="grey">(考虑开发效率和团队技能 - Human Factors Ch.6)</font>
         * *参考:* [Pro Docs](https://pro.ant.design/zh-CN/docs/getting-started), [Ant Design Spec](https://ant-design.antgroup.com/docs/spec/introduce-cn)
-    * *(状态: 框架搭建中，计划进行培训)*
 
 <!-- v -->
 
@@ -213,7 +209,7 @@ revealOptions:
 ## 2.2 系统架构设计(续 2)
 
 3. **数据层:**
-    * **数据库:** **MySQL 8.0+** 
+    * **数据库:** **MySQL 8.0+**
         * *Schema:* 已设计并部署，重点考虑了外键关联。<font size="5" color="grey">(Data/Class Design - Ch.12.2)</font>
         * *文档:* **[dbdocs.io Online Wiki](https://dbdocs.io/1978264748/E_Health)**
     * **缓存:** Redis <font size="5" color="grey">(用于提升性能 - Persistence Pattern 辅助 - Ch.13.3)</font>
@@ -229,7 +225,6 @@ revealOptions:
 **物理部署/交互 (示意):** <font size="5" color="grey">(Deployment Model Element - Ch.12.2)</font>
 
 <img src="images/image.png" alt="系统架构设计" width="40%" style="margin: 0 auto; display: block;"/>
-
 
 <!-- v -->
 
@@ -300,7 +295,7 @@ revealOptions:
 
 **主要措施** <font size="5" color="grey">(Umbrella Activities - Ch.2.2)</font>:
 
-* **需求评审/验证 (Requirements Validation - Ch.8.6):** 小组内部及大组间交叉评审需求报告，确保理解一致、无歧义、完整、可测试。 *(本周截止)*
+* **需求评审/验证 (Requirements Validation - Ch.8.6):** 小组内部及大组间交叉评审需求报告，确保理解一致、无歧义、完整、可测试。
 * **设计评审 (Design Review):** 对架构、数据库 Schema (dbdocs.io)、API 设计 (Apifox) 进行评审。<font size="5" color="grey">(FTRs - Ch.20.6)</font>
 * **代码规范与审查 (Code Review):** 制定统一规范，成员间代码互审 (**通过 Pull Request 强制执行**)。<font size="5" color="grey">(FTRs - Ch.20.6)</font>
 
@@ -355,7 +350,7 @@ revealOptions:
 
 * **需求:** 各小组需求报告完成。<font size="5" color="grey">(End of Requirements Engineering Phase - roughly)</font>
 * **设计:** 整体数据库 Schema 已设计部署；API 在 Apifox 中部分定义；架构已初步确定。<font size="5" color="grey">(Modeling/Design Phase)</font>
-* **开发:** 前端框架搭建中；后端可开始开发；数据库已可用。<font size="5" color="grey">(Transition to Construction Phase - Ch.2.2)</font>
+* **开发:** 前端框架搭建完毕；后端已开始开发；数据库已可用。<font size="5" color="grey">(Transition to Construction Phase - Ch.2.2)</font>
 * **下一步:** 完成需求报告 -> 细化 API 设计 -> **按计划并行开发 (遵循 Git 工作流)** -> 集成测试。
 
 <!-- s -->
